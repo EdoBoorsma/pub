@@ -8,8 +8,7 @@
  */
 
 (function () {
-  let CURRENT_VERSION = ''; // stable release (folder name) from versions.json
-  let BETA_VERSION = '';    // beta release (folder name) from versions.json
+  let VERSIONS = []; // from versions.json
 
   /**
    * Format folder name (e.g. "v6" -> "v6.0", "v6.1" stays "v6.1").
@@ -17,6 +16,32 @@
   function formatVersionLabel(folder) {
     if (!folder) return '';
     return /\./.test(folder) ? folder : folder + '.0';
+  }
+
+  /**
+   * Determine status for the current version folder based on versions.json.
+   * If not found, treat as old.
+   */
+  function getStatusForVersion(versionFolder) {
+    for (let i = 0; i < VERSIONS.length; i++) {
+      const v = VERSIONS[i];
+      const id = v && v.id ? String(v.id) : '';
+      if (id === versionFolder) {
+        return v.status || 'old';
+      }
+    }
+    return 'old';
+  }
+
+  /**
+   * Get current (stable) version id from versions.json.
+   */
+  function getCurrentVersionId() {
+    for (let i = 0; i < VERSIONS.length; i++) {
+      const v = VERSIONS[i];
+      if (v && v.status === 'current') return v.id;
+    }
+    return '';
   }
 
   /**
@@ -30,44 +55,47 @@
 
     if (!banner || !versionMatch) return;
 
-    const versionFolder = versionMatch[0];          // bv. "v6" of "v6.0"
+    const versionFolder = versionMatch[0];          // bv. "v6" of "v6.0" of "v6.1"
     const versionLabel  = formatVersionLabel(versionFolder);
 
+    const status = getStatusForVersion(versionFolder);
+    const currentId = getCurrentVersionId();
+
     // Current stable → no banner
-    if (versionFolder === CURRENT_VERSION) {
+    if (status === 'current') {
       banner.style.display = 'none';
       document.body.classList.remove('with-banner');
       banner.className = '';
       banner.innerHTML = '';
-    } else if (BETA_VERSION && versionFolder === BETA_VERSION) {
-      // Beta banner
+      return;
+    }
+
+    // Beta banner
+    if (status === 'beta') {
       banner.className = 'banner-beta';
       banner.innerHTML = `
         <div class="version-banner-inner">
           <strong>OOAPI ${versionLabel} (beta).</strong>
           Latest stable:
-          <a href="/${CURRENT_VERSION}/">${formatVersionLabel(CURRENT_VERSION)}</a>.
+          <a href="/${currentId}/">${formatVersionLabel(currentId)}</a>.
         </div>
       `;
       banner.style.display = 'block';
       document.body.classList.add('with-banner');
-    } else {
-      // Older-than-stable banner
-      banner.className = 'banner-old';
-      const betaPart = BETA_VERSION
-        ? ` Beta:
-            <a href="/${BETA_VERSION}/">${formatVersionLabel(BETA_VERSION)}</a>.`
-        : '';
-      banner.innerHTML = `
-        <div class="version-banner-inner">
-          <strong>OOAPI ${versionLabel} (old).</strong>
-          Latest:
-          <a href="/${CURRENT_VERSION}/">${formatVersionLabel(CURRENT_VERSION)}</a>.${betaPart}
-        </div>
-      `;
-      banner.style.display = 'block';
-      document.body.classList.add('with-banner');
+      return;
     }
+
+    // Old / unknown
+    banner.className = 'banner-old';
+    banner.innerHTML = `
+      <div class="version-banner-inner">
+        <strong>OOAPI ${versionLabel} (old).</strong>
+        Latest:
+        <a href="/${currentId}/">${formatVersionLabel(currentId)}</a>.
+      </div>
+    `;
+    banner.style.display = 'block';
+    document.body.classList.add('with-banner');
   }
 
   /**
@@ -100,8 +128,7 @@
     fetch('/versions.json')
       .then(function (r) { return r.json(); })
       .then(function (data) {
-        CURRENT_VERSION = (data && data.latest) ? data.latest : '';
-        BETA_VERSION = (data && data.beta) ? data.beta : '';
+        VERSIONS = (data && data.versions && Array.isArray(data.versions)) ? data.versions : [];
         setTimeout(renderBanner, 80);
       });
 
