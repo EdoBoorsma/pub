@@ -8,8 +8,8 @@
  */
 
 (function () {
-  const CURRENT_VERSION = 'v6';   // stable release (folder name)
-  const BETA_VERSION = '';    // beta release (folder name)
+  let CURRENT_VERSION = ''; // stable release (folder name) from versions.json
+  let BETA_VERSION = '';    // beta release (folder name) from versions.json
 
   /**
    * Format folder name (e.g. "v6" -> "v6.0", "v6.1" stays "v6.1").
@@ -97,7 +97,14 @@
 
   function initialise() {
     // kleine delay zodat Docsify de layout klaar heeft
-    setTimeout(renderBanner, 80);
+    fetch('/versions.json')
+      .then(function (r) { return r.json(); })
+      .then(function (data) {
+        CURRENT_VERSION = (data && data.latest) ? data.latest : '';
+        BETA_VERSION = (data && data.beta) ? data.beta : '';
+        setTimeout(renderBanner, 80);
+      });
+
     initialiseVersionSwitch();
   }
 
