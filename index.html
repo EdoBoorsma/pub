@@ -1,35 +1,22 @@
-<!DOCTYPE html>
-<html lang="nl">
+<!doctype html>
+<html lang="en">
 <head>
   <meta charset="utf-8" />
-  <title>OOAPI documentatie</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <style>
-    body {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-      margin: 4rem;
-      max-width: 48rem;
-    }
-    h1 { font-size: 2rem; }
-    ul { line-height: 1.8; }
-    a { text-decoration: none; color: #0055aa; }
-    a:hover { text-decoration: underline; }
-  </style>
+  <title>OOAPI Documentation</title>
 </head>
 <body>
-  <h1>Open Onderwijs API</h1>
-  <p>Kies een documentatieversie: Ja</p>
-
-  <h2>Documentatie</h2>
-  <ul>
-    <li><a href="./v6.1/">v6.1 (latest)</a></li>
-    <li><a href="./v6.0/">v6.0</a></li>
-  </ul>
-
-  <h2>Specificaties</h2>
-  <ul>
-    <li><a href="./specification/v6.1/">v6.1 (latest)</a></li>
-    <li><a href="./specification/v6.0/">v6.0</a></li>
-  </ul>
+<script>
+(async () => {
+  try {
+    const cfg = await (await fetch('./versions.json', { cache: 'no-store' })).json();
+    const current = cfg.current || cfg.latest || 'v6.0';
+    location.replace('./' + current + '/');
+  } catch (e) {
+    location.replace('./v6.0/');
+  }
+})();
+</script>
+<noscript><a href="./v6.0/">Go to OOAPI docs</a></noscript>
 </body>
 </html>

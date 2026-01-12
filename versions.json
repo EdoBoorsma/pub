@@ -1,4 +1,9 @@
 {
-  "latest": "v6.1",
-  "versions": ["v6.0", "v6.1"]
+  "current": "v6.0",
+  "beta": "v6.1",
+  "versions": [
+    { "id": "v6.1", "label": "v6.1", "status": "beta" },
+    { "id": "v6.0", "label": "v6.0", "status": "current" },
+    { "id": "v5.0", "label": "v5.0", "status": "old" }
+  ]
 }
