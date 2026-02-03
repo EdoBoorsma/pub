@@ -1318,21 +1318,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "required": [
-                  "remoteState"
-                ],
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/CourseOfferingAssociationExternalMe"
-                  },
-                  {
-                    "properties": {
-                      "issuer": {
-                        "$ref": "#/components/schemas/Organisation"
-                      }
-                    }
-                  }
-                ]
+                "$ref": "#/components/schemas/CourseOfferingAssociationsExternalMePostRequest"
               }
             }
           }
@@ -6476,11 +6462,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/PersonProperties"
-                  }
-                ]
+                "$ref": "#/components/schemas/PersonsPostRequest"
               }
             }
           }
@@ -7288,21 +7270,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "required": [
-                  "remoteState"
-                ],
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/ProgrammeOfferingAssociationExternalMe"
-                  },
-                  {
-                    "properties": {
-                      "issuer": {
-                        "$ref": "#/components/schemas/Organisation"
-                      }
-                    }
-                  }
-                ]
+                "$ref": "#/components/schemas/ProgrammeOfferingAssociationsExternalMePostRequest"
               }
             }
           }
@@ -13518,9 +13486,6 @@
                 "description": "Indicates which party caused the version mismatch. When null, the 406 was\ntriggered by an unsupported OOAPI version. If populated with a Consumer\nobject, the 406 was caused by a consumer-specific version that did not match\nany supported version. This field MAY contain a full Consumer object or be\nnull.\n",
                 "oneOf": [
                   {
-                    "$ref": "./Consumer.yaml"
-                  },
-                  {
                     "type": "null"
                   }
                 ]
@@ -16323,7 +16288,8 @@
               {
                 "required": [
                   "courseOfferingId"
-                ]
+                ],
+                "title": "With courseOfferingId"
               },
               {
                 "title": "With expanded course offering",
@@ -16596,7 +16562,8 @@
               {
                 "required": [
                   "programmeOfferingId"
-                ]
+                ],
+                "title": "With courseOfferingId"
               },
               {
                 "title": "With expanded programme offering",
@@ -16780,6 +16747,153 @@
               }
             }
           }
+        ]
+      },
+      "CourseOfferingAssociationsExternalMePostRequest": {
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/AssociationId"
+          },
+          {
+            "$ref": "#/components/schemas/AssociationProperties"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "studyLoad": {
+                "description": "Only required when the studyload for the individual student/enrolment is different \nfrom the studyload of the course offering.\n",
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/StudyLoadDescriptor"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "result": {
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/CourseOfferingAssociationResult"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "courseOfferingId": {
+                "description": "The identifier of the courseOffering referenced here.\nWhen the client or server does not expand `offering`, only this\nidentifier is returned.\nThis field is [`expandable`](https://openonderwijsapi.nl/v6.0/#/technical/expanding-responses).\n",
+                "$ref": "#/components/schemas/Identifier"
+              },
+              "courseOffering": {
+                "description": "The expanded courseOffering object referenced here.\nWhen the client or server expands `offering`, the full expanded\ncourseOffering object MUST be returned here instead of only the\nidentifier.\nIf no offering is defined, this value is `null`.\n",
+                "type": [
+                  "object",
+                  "null"
+                ],
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/CourseOffering"
+                  }
+                ]
+              },
+              "issuer": {
+                "$ref": "#/components/schemas/Organisation"
+              }
+            },
+            "anyOf": [
+              {
+                "required": [
+                  "courseOfferingId"
+                ],
+                "title": "With courseOfferingId"
+              },
+              {
+                "title": "With expanded course offering",
+                "required": [
+                  "courseOffering"
+                ]
+              }
+            ]
+          }
+        ],
+        "required": [
+          "remoteState"
+        ]
+      },
+      "PersonsPostRequest": {
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/PersonProperties"
+          },
+          {
+            "type": "object",
+            "properties": {}
+          }
+        ]
+      },
+      "ProgrammeOfferingAssociationsExternalMePostRequest": {
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/AssociationId"
+          },
+          {
+            "$ref": "#/components/schemas/AssociationProperties"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "result": {
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/ProgrammeOfferingAssociationResult"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "programmeOfferingId": {
+                "description": "The identifier of the `programmeOffering` referenced here.\nWhen the client does not request expansion of `offering`, only this identifier is returned.\nThis field is [`expandable`](https://openonderwijsapi.nl/v6.0/#/technical/expanding-responses).\n",
+                "$ref": "#/components/schemas/Identifier"
+              },
+              "programmeOffering": {
+                "description": "The expanded programmeOffering object referenced here.\nWhen the client requests expansion of `offering`, the full expanded programmeOffering object MUST be returned here instead of only the identifier.\nIf no offering is defined, this value is `null`.\n",
+                "type": [
+                  "object",
+                  "null"
+                ],
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/ProgrammeOffering"
+                  }
+                ]
+              },
+              "issuer": {
+                "$ref": "#/components/schemas/Organisation"
+              }
+            },
+            "anyOf": [
+              {
+                "required": [
+                  "programmeOfferingId"
+                ],
+                "title": "With courseOfferingId"
+              },
+              {
+                "title": "With expanded programme offering",
+                "required": [
+                  "programmeOffering"
+                ]
+              }
+            ]
+          }
+        ],
+        "required": [
+          "remoteState"
         ]
       }
     },

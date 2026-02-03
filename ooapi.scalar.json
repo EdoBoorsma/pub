@@ -1318,19 +1318,138 @@
           "content": {
             "application/json": {
               "schema": {
+                "type": "object",
+                "properties": {
+                  "associationId": {
+                    "type": "string",
+                    "description": "Unique id of this association",
+                    "format": "uuid",
+                    "example": "123e4567-e89b-12d3-a456-426614174000"
+                  },
+                  "role": {
+                    "$ref": "#/components/schemas/associationRole"
+                  },
+                  "startDateTime": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "format": "date-time",
+                    "description": "The start date and time the person is intended to start participating in the offering. Formatted according to RFC3339 (full-date)",
+                    "example": "2025-01-01T08:30:00+01:00"
+                  },
+                  "expectedEndDateTime": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "format": "date-time",
+                    "description": "The expected end date and time the person is intended to stop participating in the offering. Formatted according to RFC3339 (date-time)",
+                    "example": "2025-10-25T08:30:00+01:00"
+                  },
+                  "actualEndDateTime": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "format": "date-time",
+                    "description": "The actual end date and time the person stopped participating in the offering. Formatted according to RFC3339 (full-date)",
+                    "example": "2025-10-23T08:30:00+01:00"
+                  },
+                  "state": {
+                    "$ref": "#/components/schemas/associationState",
+                    "readOnly": true
+                  },
+                  "remoteState": {
+                    "writeOnly": true,
+                    "oneOf": [
+                      {
+                        "$ref": "#/components/schemas/remoteAssociationState"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "consumer": {
+                    "oneOf": [
+                      {
+                        "$ref": "#/components/schemas/Consumer"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "ext": {
+                    "oneOf": [
+                      {
+                        "$ref": "#/components/schemas/Ext"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "studyLoad": {
+                    "description": "Only required when the studyload for the individual student/enrolment is different \nfrom the studyload of the course offering.\n",
+                    "oneOf": [
+                      {
+                        "$ref": "#/components/schemas/StudyLoadDescriptor"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "result": {
+                    "oneOf": [
+                      {
+                        "$ref": "#/components/schemas/CourseOfferingAssociationResult"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "courseOfferingId": {
+                    "description": "The identifier of the courseOffering referenced here.\nWhen the client or server does not expand `offering`, only this\nidentifier is returned.\nThis field is [`expandable`](https://openonderwijsapi.nl/v6.0/#/technical/expanding-responses).\n",
+                    "$ref": "#/components/schemas/Identifier"
+                  },
+                  "courseOffering": {
+                    "description": "The expanded courseOffering object referenced here.\nWhen the client or server expands `offering`, the full expanded\ncourseOffering object MUST be returned here instead of only the\nidentifier.\nIf no offering is defined, this value is `null`.\n",
+                    "type": [
+                      "object",
+                      "null"
+                    ],
+                    "allOf": [
+                      {
+                        "$ref": "#/components/schemas/CourseOffering"
+                      }
+                    ]
+                  },
+                  "issuer": {
+                    "$ref": "#/components/schemas/Organisation"
+                  }
+                },
                 "required": [
-                  "remoteState"
+                  "associationId",
+                  "remoteState",
+                  "role",
+                  "state"
                 ],
-                "allOf": [
+                "anyOf": [
                   {
-                    "$ref": "#/components/schemas/CourseOfferingAssociationExternalMe"
+                    "required": [
+                      "courseOfferingId"
+                    ],
+                    "title": "With courseOfferingId"
                   },
                   {
-                    "properties": {
-                      "issuer": {
-                        "$ref": "#/components/schemas/Organisation"
-                      }
-                    }
+                    "title": "With expanded course offering",
+                    "required": [
+                      "courseOffering"
+                    ]
                   }
                 ]
               }
@@ -6476,11 +6595,375 @@
           "content": {
             "application/json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/PersonProperties"
+                "type": "object",
+                "properties": {
+                  "primaryCode": {
+                    "description": "The primary human readable identifier for the person. This is often the source identifier as defined by the institution.",
+                    "$ref": "#/components/schemas/IdentifierEntry",
+                    "example": {
+                      "codeType": "studentNumber",
+                      "code": 0
+                    }
+                  },
+                  "givenName": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "description": "The first name of this person",
+                    "maxLength": 256,
+                    "example": "Martina"
+                  },
+                  "alternateName": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "description": "The Name a person chooses to use. this is part of a Self Sovereign name e.g. in the eduId process comparable to schema.org alternateName",
+                    "maxLength": 256,
+                    "example": "Marieke"
+                  },
+                  "preferredName": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "description": "The name how the person would like to be called. Usually first name of this person. In line with ISO/IEC 24760 – Identity Management Vocabulary",
+                    "maxLength": 256,
+                    "example": "Maartje"
+                  },
+                  "surnamePrefix": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "description": "The prefix of the family name of this person",
+                    "example": "van"
+                  },
+                  "surname": {
+                    "type": "string",
+                    "description": "The family name of this person",
+                    "maxLength": 256,
+                    "example": "Damme"
+                  },
+                  "displayName": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "description": "The name of this person which will be displayed",
+                    "maxLength": 256,
+                    "example": "Maartje van Damme"
+                  },
+                  "initials": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "description": "The initials of this person",
+                    "example": "MCW"
+                  },
+                  "idCheckName": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "description": "The name of the person as printed on official identification documents\n(driving licence, passport or identity card). This MUST be formatted as\n\"surname prefix surname, given names\" (separating surnamePrefix and surname\nwith a single space, and surname and given names with a comma and space).\n\nIf the surname or given names are not available or are secret, the values\n\"secret\" and \"not_available\" are recommended. The surname prefix may be\nomitted. E.g. \"van der Graaf, Jacobus Adrianus\". \n\nOptionally, the value of\nthe student number can be added to this field by appending it at the end,\nseparated by a comma. E.g. \"van der Graaf, Jacobus Adrianus, s12345678\"\n",
+                    "example": "van der Graaf, Jacobus Adrianus, s12345678"
+                  },
+                  "activeEnrolment": {
+                    "type": "boolean",
+                    "description": "Whether this person has an active enrolment.",
+                    "example": false
+                  },
+                  "dateOfBirth": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "description": "The date of birth of this person, using the `full-date` format as defined in \nRFC 3339 (section 5.6).\n",
+                    "format": "date",
+                    "example": "2003-09-30"
+                  },
+                  "cityOfBirth": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "description": "The city of birth of this person",
+                    "example": "Utrecht"
+                  },
+                  "countryOfBirth": {
+                    "oneOf": [
+                      {
+                        "$ref": "#/components/schemas/Country"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "nationality": {
+                    "oneOf": [
+                      {
+                        "$ref": "#/components/schemas/Nationality"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "dateOfNationality": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "description": "The date of nationality of this person, using the `full-date` format as defined in \nRFC 3339 (section 5.6).\n",
+                    "format": "date",
+                    "example": "2003-09-30"
+                  },
+                  "affiliations": {
+                    "type": [
+                      "array",
+                      "null"
+                    ],
+                    "items": {
+                      "$ref": "#/components/schemas/personAffiliation"
+                    }
+                  },
+                  "email": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "description": "The primary email address of this person",
+                    "format": "email",
+                    "maxLength": 256,
+                    "example": "vandamme.mcw@universiteitvanharderwijk.nl"
+                  },
+                  "secondaryEmail": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "description": "The secondary email address of this person",
+                    "format": "email",
+                    "maxLength": 256,
+                    "example": "poekie@xyz.nl"
+                  },
+                  "telephoneNumber": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "description": "The telephone number of this person",
+                    "maxLength": 256,
+                    "example": "+31 123 456 789"
+                  },
+                  "mobileNumber": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "description": "The mobile number of this person",
+                    "maxLength": 256,
+                    "example": "+31 612 345 678"
+                  },
+                  "photoSocial": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "description": "The url of the informal picture of this person",
+                    "format": "uri",
+                    "maxLength": 2048,
+                    "example": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Placeholder_female_superhero_c.png/203px-Placeholder_female_superhero_c.png"
+                  },
+                  "photoOfficial": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "description": "The url of the official picture of this person",
+                    "format": "uri",
+                    "maxLength": 2048,
+                    "example": "https://upload.wikimedia.org/wikipedia/commons/6/66/Johannes_Vermeer_%281632-1675%29_-_The_Girl_With_The_Pearl_Earring_%281665%29.jpg"
+                  },
+                  "gender": {
+                    "oneOf": [
+                      {
+                        "$ref": "#/components/schemas/gender"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "titlePrefix": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "description": "A title prefix to be used for this person",
+                    "example": "drs"
+                  },
+                  "titleSuffix": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "description": "A title suffix to be used for this person",
+                    "example": "BSc"
+                  },
+                  "office": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "description": "The name of the office where this person is located",
+                    "example": "Zernikecomplex"
+                  },
+                  "address": {
+                    "oneOf": [
+                      {
+                        "$ref": "#/components/schemas/Address"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "ICEName": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "description": "Full name of In Case of Emergency contact",
+                    "maxLength": 256,
+                    "example": "Janne"
+                  },
+                  "ICEPhoneNumber": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "description": "Phone number of In Case of Emergency contact",
+                    "maxLength": 256,
+                    "example": "+31 623 456 789"
+                  },
+                  "ICERelation": {
+                    "oneOf": [
+                      {
+                        "$ref": "#/components/schemas/ICERelationType"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "languageOfChoice": {
+                    "type": [
+                      "array",
+                      "null"
+                    ],
+                    "description": "The language(s) of choice for this person according to RFC4647. For details see the descriptions in the Language schema.",
+                    "items": {
+                      "$ref": "#/components/schemas/Language"
+                    }
+                  },
+                  "otherCodes": {
+                    "type": [
+                      "array",
+                      "null"
+                    ],
+                    "description": "An array of additional human readable codes/identifiers for the entity being described.",
+                    "items": {
+                      "$ref": "#/components/schemas/IdentifierEntry"
+                    },
+                    "example": [
+                      {
+                        "codeType": "nationalIdentityNumber",
+                        "code": "00000"
+                      }
+                    ]
+                  },
+                  "assignedNeeds": {
+                    "description": "Assigned resources or time based on the needs of a person. \nThey describe which needs the student requires under which conditions e.g. 15% extra time for tests that requires maths skills.\nThese needs can later in the flows be mapped to a personalNeed for a specific association.\nExamples of such assignedNeeds: \"ExtraTimeOnlyMaths25%\", \"ExtraTimeOnlyMaths30Min\", \"ExtraTimeDigitalTests25%\"\n",
+                    "type": [
+                      "array",
+                      "null"
+                    ],
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "description": "Human readable value for the code/identifier",
+                          "type": [
+                            "string",
+                            "null"
+                          ],
+                          "example": "ExtraTimeOnlyMaths25%"
+                        },
+                        "description": {
+                          "type": [
+                            "array",
+                            "null"
+                          ],
+                          "description": "The description of this assignedNeed.",
+                          "minItems": 1,
+                          "items": {
+                            "$ref": "#/components/schemas/LanguageTypedString"
+                          },
+                          "example": [
+                            {
+                              "language": "en-GB",
+                              "value": "Extra time for Maths tests shown in a percentile of the overall time of a test"
+                            }
+                          ]
+                        },
+                        "startDateTime": {
+                          "type": [
+                            "string",
+                            "null"
+                          ],
+                          "description": "The moment on which this assigned need starts, RFC3339 (date-time)",
+                          "format": "date-time",
+                          "example": "2025-05-30T20:00:00+01:00"
+                        },
+                        "endDateTime": {
+                          "type": [
+                            "string",
+                            "null"
+                          ],
+                          "description": "The moment on which this assigned need ends, RFC3339 (date-time)",
+                          "format": "date-time",
+                          "example": "2025-07-30T20:00:00+01:00"
+                        }
+                      }
+                    },
+                    "minItems": 0
+                  },
+                  "consumer": {
+                    "oneOf": [
+                      {
+                        "$ref": "#/components/schemas/Consumer"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "ext": {
+                    "oneOf": [
+                      {
+                        "$ref": "#/components/schemas/Ext"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
                   }
-                ]
+                }
               }
             }
           }
@@ -7288,19 +7771,127 @@
           "content": {
             "application/json": {
               "schema": {
+                "type": "object",
+                "properties": {
+                  "associationId": {
+                    "type": "string",
+                    "description": "Unique id of this association",
+                    "format": "uuid",
+                    "example": "123e4567-e89b-12d3-a456-426614174000"
+                  },
+                  "role": {
+                    "$ref": "#/components/schemas/associationRole"
+                  },
+                  "startDateTime": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "format": "date-time",
+                    "description": "The start date and time the person is intended to start participating in the offering. Formatted according to RFC3339 (full-date)",
+                    "example": "2025-01-01T08:30:00+01:00"
+                  },
+                  "expectedEndDateTime": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "format": "date-time",
+                    "description": "The expected end date and time the person is intended to stop participating in the offering. Formatted according to RFC3339 (date-time)",
+                    "example": "2025-10-25T08:30:00+01:00"
+                  },
+                  "actualEndDateTime": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "format": "date-time",
+                    "description": "The actual end date and time the person stopped participating in the offering. Formatted according to RFC3339 (full-date)",
+                    "example": "2025-10-23T08:30:00+01:00"
+                  },
+                  "state": {
+                    "$ref": "#/components/schemas/associationState",
+                    "readOnly": true
+                  },
+                  "remoteState": {
+                    "writeOnly": true,
+                    "oneOf": [
+                      {
+                        "$ref": "#/components/schemas/remoteAssociationState"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "consumer": {
+                    "oneOf": [
+                      {
+                        "$ref": "#/components/schemas/Consumer"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "ext": {
+                    "oneOf": [
+                      {
+                        "$ref": "#/components/schemas/Ext"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "result": {
+                    "oneOf": [
+                      {
+                        "$ref": "#/components/schemas/ProgrammeOfferingAssociationResult"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "programmeOfferingId": {
+                    "description": "The identifier of the `programmeOffering` referenced here.\nWhen the client does not request expansion of `offering`, only this identifier is returned.\nThis field is [`expandable`](https://openonderwijsapi.nl/v6.0/#/technical/expanding-responses).\n",
+                    "$ref": "#/components/schemas/Identifier"
+                  },
+                  "programmeOffering": {
+                    "description": "The expanded programmeOffering object referenced here.\nWhen the client requests expansion of `offering`, the full expanded programmeOffering object MUST be returned here instead of only the identifier.\nIf no offering is defined, this value is `null`.\n",
+                    "type": [
+                      "object",
+                      "null"
+                    ],
+                    "allOf": [
+                      {
+                        "$ref": "#/components/schemas/ProgrammeOffering"
+                      }
+                    ]
+                  },
+                  "issuer": {
+                    "$ref": "#/components/schemas/Organisation"
+                  }
+                },
                 "required": [
-                  "remoteState"
+                  "associationId",
+                  "remoteState",
+                  "role",
+                  "state"
                 ],
-                "allOf": [
+                "anyOf": [
                   {
-                    "$ref": "#/components/schemas/ProgrammeOfferingAssociationExternalMe"
+                    "required": [
+                      "programmeOfferingId"
+                    ],
+                    "title": "With courseOfferingId"
                   },
                   {
-                    "properties": {
-                      "issuer": {
-                        "$ref": "#/components/schemas/Organisation"
-                      }
-                    }
+                    "title": "With expanded programme offering",
+                    "required": [
+                      "programmeOffering"
+                    ]
                   }
                 ]
               }
@@ -13518,9 +14109,6 @@
                 "description": "Indicates which party caused the version mismatch. When null, the 406 was\ntriggered by an unsupported OOAPI version. If populated with a Consumer\nobject, the 406 was caused by a consumer-specific version that did not match\nany supported version. This field MAY contain a full Consumer object or be\nnull.\n",
                 "oneOf": [
                   {
-                    "$ref": "./Consumer.yaml"
-                  },
-                  {
                     "type": "null"
                   }
                 ]
@@ -16323,7 +16911,8 @@
               {
                 "required": [
                   "courseOfferingId"
-                ]
+                ],
+                "title": "With courseOfferingId"
               },
               {
                 "title": "With expanded course offering",
@@ -16596,7 +17185,8 @@
               {
                 "required": [
                   "programmeOfferingId"
-                ]
+                ],
+                "title": "With courseOfferingId"
               },
               {
                 "title": "With expanded programme offering",

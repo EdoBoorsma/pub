@@ -7,8 +7,17 @@ export default {
     }
   ],
   apis: {
-    type: "url",
-    input: "./openapi.yaml",
+    type: "file",
+    input: "../ooapi.zudoku.json",
     path: "/api"
+  },
+  redirects: [{ from: "/", to: "/api" }],
+  server: {
+    ssr: false
+  },
+  experimental: {
+    ssr: false
   }
-}
+
+};
+

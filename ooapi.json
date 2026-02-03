@@ -1318,6 +1318,7 @@
           "content": {
             "application/json": {
               "schema": {
+                "type": "object",
                 "required": [
                   "remoteState"
                 ],
@@ -1326,6 +1327,7 @@
                     "$ref": "#/components/schemas/CourseOfferingAssociationExternalMe"
                   },
                   {
+                    "type": "object",
                     "properties": {
                       "issuer": {
                         "$ref": "#/components/schemas/Organisation"
@@ -13517,9 +13519,6 @@
               "consumer": {
                 "description": "Indicates which party caused the version mismatch. When null, the 406 was\ntriggered by an unsupported OOAPI version. If populated with a Consumer\nobject, the 406 was caused by a consumer-specific version that did not match\nany supported version. This field MAY contain a full Consumer object or be\nnull.\n",
                 "oneOf": [
-                  {
-                    "$ref": "./Consumer.yaml"
-                  },
                   {
                     "type": "null"
                   }

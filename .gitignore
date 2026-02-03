@@ -20,3 +20,6 @@ $RECYCLE.BIN/
 # Tool-specific
 # =========================
 *.drawio.bkp
+zudoku/node_modules/*
+zudoku/package.json
+zudoku/package-lock.json

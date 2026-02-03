@@ -14,7 +14,7 @@
     <div id="zudoku"></div>
 
     <script type="module">
-      const schemaUrl = new URL("ooapi.json", window.location.href).href;
+      const schemaUrl = new URL("../ooapi.zudoku.json", window.location.href).href;
       const el = document.getElementById("zudoku");
       el.setAttribute("data-api-url", schemaUrl);
 
