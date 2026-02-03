@@ -6,17 +6,14 @@
   <title>OOAPI Documentation</title>
 </head>
 <body>
-<script>
-(async () => {
-  try {
-    const cfg = await (await fetch('./versions.json', { cache: 'no-store' })).json();
-    const current = cfg.current || cfg.latest || 'v6.0';
-    location.replace('./' + current + '/');
-  } catch (e) {
-    location.replace('./v6.0/');
-  }
-})();
-</script>
-<noscript><a href="./v6.0/">Go to OOAPI docs</a></noscript>
+<h1>
+    <a href="redoc/index.html">Redoc Documentation</a>
+</h1>
+<h1>
+    <a href="scalar/index.html">Redoc Documentation</a>
+</h1>
+<h1>
+    <a href="spotlight/index.html">Redoc Documentation</a>
+</h1>
 </body>
 </html>

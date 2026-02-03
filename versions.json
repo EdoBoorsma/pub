@@ -2,8 +2,8 @@
   "current": "v6.0",
   "beta": "v6.1",
   "versions": [
-    { "id": "v6.1", "label": "v6.1", "status": "beta" },
-    { "id": "v6.0", "label": "v6.0", "status": "current" },
-    { "id": "v5.0", "label": "v5.0", "status": "old" }
+    { "id": "v6.1", "folder": "v6.1", "label": "v6.1", "status": "beta" },
+    { "id": "v6.0", "folder": "v6", "label": "v6.0", "status": "current" },
+    { "id": "v5.0", "folder": "v5", "label": "v5.0", "status": "old" }
   ]
 }
