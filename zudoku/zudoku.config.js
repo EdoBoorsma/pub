@@ -1,4 +1,13 @@
 export default {
+
+  basePath: "/zudoku/dist",
+
+  prerender: false,
+
+  build: {
+    outDir: "../.."  // Absoluut pad vanaf waar config staat?
+  },
+ 
   navigation: [
     {
       type: "link",
@@ -6,12 +15,10 @@ export default {
       label: "API Reference"
     }
   ],
+  
   apis: {
     type: "file",
     input: "../ooapi.zudoku.json",
-  },
-  basePath: "/zudoku/dist",
-  mode: "standalone"
-
+    path: "api"
+  }
 };
-
