@@ -12,12 +12,8 @@ export default {
     path: "/api"
   },
   redirects: [{ from: "/", to: "/api" }],
-  server: {
-    ssr: false
-  },
-  experimental: {
-    ssr: false
-  }
+  basePath: "/zudoku/dist",
+  mode: "standalone"
 
 };
 
