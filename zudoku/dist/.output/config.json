@@ -5,19 +5,11 @@
   },
   "routes": [
     {
-      "src": "/zudoku/api",
-      "dest": "/zudoku/api/service-metadata",
+      "src": "/zudoku/dist",
+      "dest": "/zudoku/dist/api",
       "status": 301,
       "headers": {
-        "Location": "/zudoku/api/service-metadata"
-      }
-    },
-    {
-      "src": "/zudoku",
-      "dest": "/zudoku/api",
-      "status": 301,
-      "headers": {
-        "Location": "/zudoku/api"
+        "Location": "/zudoku/dist/api"
       }
     }
   ]
