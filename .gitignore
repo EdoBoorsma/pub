@@ -23,3 +23,4 @@ $RECYCLE.BIN/
 zudoku/node_modules/*
 zudoku/package.json
 zudoku/package-lock.json
+zudoku/dist.tmp/
