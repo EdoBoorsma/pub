@@ -3,14 +3,5 @@
   "framework": {
     "version": "0.67.0"
   },
-  "routes": [
-    {
-      "src": "/zudoku/dist",
-      "dest": "/zudoku/dist/api",
-      "status": 301,
-      "headers": {
-        "Location": "/zudoku/dist/api"
-      }
-    }
-  ]
+  "routes": []
 }

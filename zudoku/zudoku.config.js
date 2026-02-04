@@ -9,9 +9,7 @@ export default {
   apis: {
     type: "file",
     input: "../ooapi.zudoku.json",
-    path: "./api"
   },
-  redirects: [{ from: "/", to: "./api" }],
   basePath: "/zudoku/dist",
   mode: "standalone"
 
