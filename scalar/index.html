@@ -1,21 +1,964 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
   <head>
-    <title>OOAPI Scalar</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>OOAPI – API Reference</title>
     <style>
       html, body { height: 100%; margin: 0; }
       #app { height: 100%; }
+      
+      [data-section*="model"] details,
+      [data-section*="tag-"] details {
+        pointer-events: none !important;
+      }
+      
+      [data-section*="model"] details > summary::before,
+      [data-section*="tag-"] details > summary::before {
+        display: none !important;
+      }
+      
+      .schema-container {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      }
+      
+      .schema-description {
+        margin: 0 0 20px 0;
+        line-height: 1.6;
+      }
+
+      .schema-variant-selector {
+        margin-bottom: 20px;
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+
+      .schema-variant-button {
+        padding: 8px 16px;
+        border: 1px solid #d0d0d0;
+        background: #f5f5f5;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 13px;
+        transition: all 0.2s;
+      }
+
+      .schema-variant-button:hover {
+        background: #e8e8e8;
+      }
+
+      .schema-variant-button.active {
+        background: #1976d2;
+        color: white;
+        border-color: #1565c0;
+      }
+
+      .schema-variant-content {
+        display: none;
+      }
+
+      .schema-variant-content.active {
+        display: block;
+      }
+
+      .schema-content-wrapper {
+        display: grid;
+        grid-template-columns: minmax(400px, 1fr) 450px;
+        gap: 30px;
+        align-items: start;
+      }
+      
+      .schema-properties {
+        position: relative;
+        margin-left: 8px;
+      }
+      
+      .schema-property {
+        display: flex;
+        position: relative;
+        padding: 12px 0;
+        border-left: 1px dotted #d0d0d0;
+      }
+      
+      .schema-property:last-child {
+        border-left: 1px dotted #d0d0d0;
+        padding-bottom: 0;
+      }
+      
+      .schema-property:last-child::after {
+        content: '';
+        position: absolute;
+        left: -1px;
+        top: 30px;
+        bottom: 0;
+        width: 1px;
+        background: #fff;
+      }
+      
+      .schema-property::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 24px;
+        width: 12px;
+        height: 1px;
+        background: #d0d0d0;
+        border-top: 1px dotted #d0d0d0;
+      }
+      
+      .schema-property-left {
+        flex: 0 0 180px;
+        padding-left: 20px;
+        padding-right: 20px;
+      }
+      
+      .schema-property-name {
+        font-weight: 600;
+        font-size: 14px;
+        color: #1a1a1a;
+        word-break: break-word;
+      }
+      
+      .schema-required {
+        display: block;
+        color: #d32f2f;
+        font-size: 10px;
+        font-weight: 700;
+        text-transform: lowercase;
+        margin-top: 4px;
+      }
+      
+      .schema-property-right {
+        flex: 1;
+        min-width: 0;
+      }
+      
+      .schema-type {
+        color: #6b6b6b;
+        font-size: 12px;
+        margin-bottom: 8px;
+        font-family: 'Consolas', 'Monaco', monospace;
+      }
+      
+      .schema-prop-description {
+        color: #4a4a4a;
+        font-size: 13px;
+        line-height: 1.6;
+        margin-bottom: 8px;
+      }
+      
+      .schema-enum {
+        margin-top: 8px;
+        font-size: 12px;
+        color: #6b6b6b;
+      }
+      
+      .schema-enum-item {
+        display: block;
+        margin: 4px 0;
+        padding-left: 0;
+      }
+      
+      .schema-example {
+        margin-top: 8px;
+        font-size: 12px;
+        color: #6b6b6b;
+        font-style: italic;
+      }
+      
+      .schema-example code {
+        background: #f5f5f5;
+        padding: 2px 6px;
+        border-radius: 3px;
+        font-size: 11px;
+        font-style: normal;
+      }
+
+      .schema-example-panel {
+        position: sticky;
+        top: 20px;
+        background: #1e1e1e;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      }
+
+      .schema-example-panel-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 12px 16px;
+        background: #2d2d2d;
+        border-bottom: 1px solid #404040;
+      }
+
+      .schema-example-panel h4 {
+        margin: 0;
+        color: #d4d4d4;
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+        font-weight: 600;
+      }
+
+      .json-controls {
+        display: flex;
+        gap: 8px;
+      }
+
+      .json-control-btn {
+        background: #404040;
+        border: none;
+        color: #d4d4d4;
+        padding: 4px 10px;
+        border-radius: 3px;
+        font-size: 11px;
+        cursor: pointer;
+        transition: background 0.2s;
+      }
+
+      .json-control-btn:hover {
+        background: #505050;
+      }
+
+      .schema-example-panel pre {
+        margin: 0;
+        padding: 16px;
+        overflow-x: auto;
+        max-height: 70vh;
+        overflow-y: auto;
+        font-family: 'Monaco', 'Menlo', 'Courier New', monospace;
+        font-size: 12px;
+        color: #d4d4d4;
+        line-height: 1.8;
+      }
+
+      .json-toggle {
+        cursor: pointer;
+        user-select: none;
+        color: #d4d4d4;
+        font-weight: bold;
+        margin-right: 4px;
+      }
+
+      .json-toggle:hover {
+        color: #fff;
+      }
+
+      .json-ellipsis {
+        color: #858585;
+        font-style: italic;
+      }
+
+      .json-expanded {
+        display: none;
+      }
+
+      .json-key { color: #9cdcfe; }
+      .json-string { color: #ce9178; }
+      .json-number { color: #b5cea8; }
+      .json-boolean { color: #569cd6; }
+      .json-null { color: #569cd6; }
+
+      .schema-example-panel pre::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+      }
+
+      .schema-example-panel pre::-webkit-scrollbar-track {
+        background: #2d2d2d;
+      }
+
+      .schema-example-panel pre::-webkit-scrollbar-thumb {
+        background: #555;
+        border-radius: 4px;
+      }
+
+      @media (max-width: 1024px) {
+        .schema-content-wrapper {
+          grid-template-columns: 1fr;
+        }
+        
+        .schema-example-panel {
+          position: static;
+          margin-top: 20px;
+        }
+      }
     </style>
   </head>
+
   <body>
     <div id="app"></div>
 
-    <script src="https://cdn.jsdelivr.net/npm/@scalar/api-reference"></script>
-    <script>
-      Scalar.createApiReference('#app', {
-        url: '../ooapi.scalar.json'
-      })
+    <script src="https://cdn.jsdelivr.net/npm/@scalar/api-reference@latest"></script>
+
+    <script type="module">
+      fetch('../ooapi.scalar.json')
+        .then(response => response.json())
+        .then(spec => {
+          const schemaCache = new Map()
+          const processedSchemas = new Set()
+          
+          if (spec.tags) {
+            spec.tags = spec.tags.map(tag => {
+              if (tag.description && tag.description.includes('<SchemaDefinition')) {
+                const match = tag.description.match(/schemaRef="([^"]+)"/)
+                if (match) {
+                  const schemaPath = match[1].replace('#/components/schemas/', '')
+                  
+                  if (processedSchemas.has(schemaPath)) {
+                    return tag
+                  }
+                  
+                  processedSchemas.add(schemaPath)
+                  const schema = spec.components?.schemas?.[schemaPath]
+                  
+                  if (schema) {
+                    try {
+                      tag.description = buildSchemaDescription(schema, schemaPath, spec.components.schemas, schemaCache)
+                    } catch (error) {
+                      console.error(`Error transforming ${schemaPath}:`, error)
+                    }
+                  }
+                }
+              }
+              return tag
+            })
+          }
+
+          Scalar.createApiReference('#app', {
+            spec: {
+              content: spec
+            }
+          })
+
+          setTimeout(() => {
+            forceDetailsOpen()
+            setupVariantSelectors()
+            attachAllHandlers()
+            
+            const observer = new MutationObserver(() => {
+              forceDetailsOpen()
+              attachAllHandlers()
+            })
+            observer.observe(document.body, {
+              childList: true,
+              subtree: true
+            })
+          }, 1500)
+        })
+
+      function attachAllHandlers() {
+        document.querySelectorAll('.json-expand-all').forEach(btn => {
+          if (btn.dataset.attached) return
+          btn.dataset.attached = 'true'
+          
+          btn.addEventListener('click', function(e) {
+            e.preventDefault()
+            const panel = this.closest('.schema-example-panel')
+            if (!panel) return
+            
+            const pre = panel.querySelector('pre')
+            if (!pre) return
+            
+            pre.querySelectorAll('.json-toggle').forEach(toggle => {
+              const wrapper = toggle.parentElement
+              const ellipsis = wrapper.querySelector('.json-ellipsis')
+              const expanded = wrapper.querySelector('.json-expanded')
+              if (ellipsis && expanded) {
+                ellipsis.style.display = 'none'
+                expanded.style.display = 'inline'
+                toggle.textContent = '−'
+              }
+            })
+          })
+        })
+
+        document.querySelectorAll('.json-collapse-all').forEach(btn => {
+          if (btn.dataset.attached) return
+          btn.dataset.attached = 'true'
+          
+          btn.addEventListener('click', function(e) {
+            e.preventDefault()
+            const panel = this.closest('.schema-example-panel')
+            if (!panel) return
+            
+            const pre = panel.querySelector('pre')
+            if (!pre) return
+            
+            pre.querySelectorAll('.json-toggle').forEach(toggle => {
+              const wrapper = toggle.parentElement
+              const ellipsis = wrapper.querySelector('.json-ellipsis')
+              const expanded = wrapper.querySelector('.json-expanded')
+              if (ellipsis && expanded) {
+                ellipsis.style.display = 'inline'
+                expanded.style.display = 'none'
+                toggle.textContent = '+'
+              }
+            })
+          })
+        })
+
+        document.querySelectorAll('.json-toggle').forEach(toggle => {
+          if (toggle.dataset.attached) return
+          toggle.dataset.attached = 'true'
+          
+          toggle.addEventListener('click', function(e) {
+            e.preventDefault()
+            e.stopPropagation()
+            
+            const wrapper = this.parentElement
+            const ellipsis = wrapper.querySelector('.json-ellipsis')
+            const expanded = wrapper.querySelector('.json-expanded')
+            
+            if (ellipsis && expanded) {
+              if (ellipsis.style.display === 'none') {
+                // Collapse
+                ellipsis.style.display = 'inline'
+                expanded.style.display = 'none'
+                this.textContent = '+'
+              } else {
+                // Expand
+                ellipsis.style.display = 'none'
+                expanded.style.display = 'inline'
+                this.textContent = '−'
+              }
+            }
+          })
+        })
+      }
+
+      function forceDetailsOpen() {
+        document.querySelectorAll('details').forEach(details => {
+          details.open = true
+          details.setAttribute('open', '')
+          
+          const summary = details.querySelector('summary')
+          if (summary) {
+            const newSummary = summary.cloneNode(true)
+            summary.parentNode.replaceChild(newSummary, summary)
+            
+            newSummary.addEventListener('click', (e) => {
+              e.preventDefault()
+              e.stopPropagation()
+              details.open = true
+              return false
+            }, true)
+          }
+        })
+      }
+
+      function setupVariantSelectors() {
+        document.querySelectorAll('.schema-variant-button').forEach(button => {
+          if (button.dataset.attached) return
+          button.dataset.attached = 'true'
+          
+          button.addEventListener('click', function() {
+            const containerId = this.dataset.container
+            const variantIndex = parseInt(this.dataset.variant)
+            
+            document.querySelectorAll(`[data-container="${containerId}"]`).forEach(btn => {
+              btn.classList.remove('active')
+            })
+            this.classList.add('active')
+            
+            document.querySelectorAll(`[data-variant-container="${containerId}"]`).forEach(content => {
+              content.classList.remove('active')
+            })
+            document.querySelector(`[data-variant-container="${containerId}"][data-variant-index="${variantIndex}"]`)?.classList.add('active')
+            
+            setTimeout(() => attachAllHandlers(), 100)
+          })
+        })
+      }
+
+      function buildSchemaDescription(schema, name, allSchemas, cache) {
+        let html = '<div class="schema-container">'
+        
+        if (schema.description) {
+          html += `<p class="schema-description">${escapeHtml(schema.description)}</p>`
+        }
+
+        const variants = detectVariants(schema, allSchemas, cache)
+        
+        if (variants.length > 1) {
+          const containerId = `variant-${Math.random().toString(36).substr(2, 9)}`
+          
+          html += '<div class="schema-variant-selector">'
+          variants.forEach((variant, index) => {
+            const activeClass = index === 0 ? 'active' : ''
+            html += `<button class="schema-variant-button ${activeClass}" data-container="${containerId}" data-variant="${index}">`
+            html += escapeHtml(variant.title)
+            html += '</button>'
+          })
+          html += '</div>'
+          
+          variants.forEach((variant, index) => {
+            const activeClass = index === 0 ? 'active' : ''
+            html += `<div class="schema-variant-content ${activeClass}" data-variant-container="${containerId}" data-variant-index="${index}">`
+            html += buildVariantContent(variant.schema, variant.required, allSchemas, cache)
+            html += '</div>'
+          })
+        } else {
+          const visitedRefs = new Set()
+          const allProperties = collectProperties(schema, allSchemas, cache, 0, visitedRefs)
+          const allRequired = collectRequired(schema, allSchemas, cache)
+          html += buildVariantContent({ properties: allProperties }, allRequired, allSchemas, cache)
+        }
+        
+        html += '</div>'
+        return html
+      }
+
+      function detectVariants(schema, allSchemas, cache) {
+        const variants = []
+        
+        if (schema.anyOf && Array.isArray(schema.anyOf)) {
+          schema.anyOf.forEach((variantSchema, index) => {
+            const visitedRefs = new Set()
+            
+            let mergedSchema = { ...schema, ...variantSchema }
+            if (schema.allOf) {
+              const allOfProps = {}
+              schema.allOf.forEach(sub => {
+                const resolved = sub.$ref ? resolveRef(sub.$ref, allSchemas) : sub
+                Object.assign(allOfProps, resolved.properties || {})
+              })
+              mergedSchema.properties = { ...allOfProps, ...mergedSchema.properties }
+            }
+            
+            const properties = collectProperties(mergedSchema, allSchemas, cache, 0, visitedRefs)
+            const required = variantSchema.required || []
+            const title = variantSchema.title || `Variant ${index + 1}`
+            
+            variants.push({
+              title,
+              schema: { properties },
+              required
+            })
+          })
+        }
+        
+        if (variants.length === 0) {
+          const visitedRefs = new Set()
+          const allProperties = collectProperties(schema, allSchemas, cache, 0, visitedRefs)
+          const allRequired = collectRequired(schema, allSchemas, cache)
+          variants.push({
+            title: 'Default',
+            schema: { properties: allProperties },
+            required: allRequired
+          })
+        }
+        
+        return variants
+      }
+
+      function buildVariantContent(schema, required, allSchemas, cache) {
+        let html = '<div class="schema-content-wrapper">'
+        
+        html += '<div class="schema-properties-wrapper">'
+        
+        const allProperties = schema.properties || {}
+        
+        if (Object.keys(allProperties).length > 0) {
+          html += '<div class="schema-properties">'
+          
+          for (const [propName, prop] of Object.entries(allProperties)) {
+            const isRequired = required.includes(propName)
+            
+            let resolvedProp = prop
+            if (prop.$ref) {
+              resolvedProp = resolveRef(prop.$ref, allSchemas) || prop
+            }
+            
+            const propType = typeOf(resolvedProp, allSchemas, new Map(), propName)
+            const propDesc = resolvedProp.description || ''
+            
+            html += `<div class="schema-property">`
+            html += `<div class="schema-property-left">`
+            html += `<div class="schema-property-name">${escapeHtml(propName)}</div>`
+            if (isRequired) {
+              html += `<div class="schema-required">required</div>`
+            }
+            html += `</div>`
+            
+            html += `<div class="schema-property-right">`
+            html += `<div class="schema-type">${escapeHtml(propType)}</div>`
+            
+            if (propDesc) {
+              html += `<div class="schema-prop-description">${escapeHtml(propDesc)}</div>`
+            }
+            
+            if (resolvedProp.enum) {
+              html += `<div class="schema-enum">`
+              for (const val of resolvedProp.enum) {
+                html += `<span class="schema-enum-item">${escapeHtml(String(val))}</span>`
+              }
+              html += `</div>`
+            }
+            
+            if (resolvedProp.example !== undefined) {
+              const exampleStr = typeof resolvedProp.example === 'string' 
+                ? resolvedProp.example 
+                : JSON.stringify(resolvedProp.example)
+              html += `<div class="schema-example">Example: <code>${escapeHtml(exampleStr)}</code></div>`
+            }
+            
+            html += `</div></div>`
+          }
+          
+          html += '</div>'
+        }
+        html += '</div>'
+
+        const fullExample = generateFullExample(allProperties, required, allSchemas, new Map())
+        if (fullExample) {
+          html += '<div class="schema-example-panel">'
+          html += '<div class="schema-example-panel-header">'
+          html += '<h4>Example</h4>'
+          html += '<div class="json-controls">'
+          html += '<button class="json-control-btn json-expand-all">Expand all</button>'
+          html += '<button class="json-control-btn json-collapse-all">Collapse all</button>'
+          html += '</div>'
+          html += '</div>'
+          html += '<pre>'
+          html += renderJsonCollapsible(JSON.parse(fullExample), 0, true)
+          html += '</pre>'
+          html += '</div>'
+        }
+        
+        html += '</div>'
+        return html
+      }
+
+      function renderJsonCollapsible(obj, indent, isRoot) {
+        const sp = '  '
+        let html = ''
+        
+        if (obj === null) return '<span class="json-null">null</span>'
+        if (typeof obj === 'boolean') return `<span class="json-boolean">${obj}</span>`
+        if (typeof obj === 'number') return `<span class="json-number">${obj}</span>`
+        if (typeof obj === 'string') return `<span class="json-string">"${escapeHtml(obj)}"</span>`
+        
+        if (Array.isArray(obj)) {
+          if (obj.length === 0) return '[]'
+          
+          if (isRoot) {
+            html += '[\n'
+            obj.forEach((item, i) => {
+              html += sp.repeat(indent + 1)
+              const needsToggle = (typeof item === 'object' && item !== null && !Array.isArray(item) && Object.keys(item).length > 0) ||
+                                  (Array.isArray(item) && item.length > 0)
+              if (needsToggle) {
+                html += '<span class="json-collapsible-wrapper">'
+                html += '<span class="json-toggle">+</span>'
+                html += '<span class="json-ellipsis">'
+                html += Array.isArray(item) ? '[ ... ]' : '{ ... }'
+                html += '</span>'
+                html += '<span class="json-expanded" style="display:none">'
+                html += renderJsonCollapsible(item, indent + 1, false)
+                html += '</span>'
+                html += '</span>'
+              } else {
+                html += renderJsonCollapsible(item, indent + 1, false)
+              }
+              if (i < obj.length - 1) html += ','
+              html += '\n'
+            })
+            html += sp.repeat(indent) + ']'
+          } else {
+            html += '[ ... ]'
+          }
+          return html
+        }
+        
+        if (typeof obj === 'object') {
+          const keys = Object.keys(obj)
+          if (keys.length === 0) return '{}'
+          
+          if (isRoot) {
+            html += '{\n'
+            keys.forEach((key, i) => {
+              html += sp.repeat(indent + 1)
+              const value = obj[key]
+              const needsToggle = (typeof value === 'object' && value !== null && !Array.isArray(value) && Object.keys(value).length > 0) ||
+                                  (Array.isArray(value) && value.length > 0)
+              
+              if (needsToggle) {
+                html += '<span class="json-collapsible-wrapper">'
+                html += '<span class="json-toggle">+</span>'
+                html += `<span class="json-key">"${escapeHtml(key)}"</span>: `
+                html += '<span class="json-ellipsis">'
+                html += Array.isArray(value) ? '[ ... ]' : '{ ... }'
+                html += '</span>'
+                html += '<span class="json-expanded" style="display:none">'
+                html += renderJsonCollapsible(value, indent + 1, false)
+                html += '</span>'
+                html += '</span>'
+              } else {
+                html += `<span class="json-key">"${escapeHtml(key)}"</span>: `
+                html += renderJsonCollapsible(value, indent + 1, false)
+              }
+              
+              if (i < keys.length - 1) html += ','
+              html += '\n'
+            })
+            html += sp.repeat(indent) + '}'
+          } else {
+            html += '{ ... }'
+          }
+          return html
+        }
+        
+        return String(obj)
+      }
+
+      function generateFullExample(properties, required, allSchemas, cache, depth = 0) {
+        if (depth > 5) return null
+        
+        const example = {}
+        let hasExample = false
+
+        for (const [propName, prop] of Object.entries(properties)) {
+          let resolvedProp = prop
+          
+          if (prop.$ref) {
+            resolvedProp = resolveRef(prop.$ref, allSchemas) || prop
+          }
+          
+          if (resolvedProp.allOf) {
+            const mergedProps = {}
+            for (const subSchema of resolvedProp.allOf) {
+              const resolved = subSchema.$ref ? (resolveRef(subSchema.$ref, allSchemas) || subSchema) : subSchema
+              Object.assign(mergedProps, resolved.properties || {})
+              if (resolved.example !== undefined) {
+                example[propName] = resolved.example
+                hasExample = true
+                continue
+              }
+            }
+            if (Object.keys(mergedProps).length > 0) {
+              resolvedProp = { ...resolvedProp, properties: mergedProps }
+            }
+          }
+          
+          if (resolvedProp.oneOf && !resolvedProp.example) {
+            for (const option of resolvedProp.oneOf) {
+              const resolved = option.$ref ? (resolveRef(option.$ref, allSchemas) || option) : option
+              if (resolved.example !== undefined) {
+                example[propName] = resolved.example
+                hasExample = true
+                break
+              } else if (resolved.properties) {
+                const nestedEx = generateFullExample(resolved.properties, resolved.required || [], allSchemas, cache, depth + 1)
+                if (nestedEx) {
+                  example[propName] = JSON.parse(nestedEx)
+                  hasExample = true
+                  break
+                }
+              }
+            }
+            if (example[propName]) continue
+          }
+
+          if (resolvedProp.example !== undefined) {
+            example[propName] = resolvedProp.example
+            hasExample = true
+          } 
+          else if (resolvedProp.type === 'array') {
+            if (resolvedProp.items) {
+              let itemsResolved = resolvedProp.items
+              if (resolvedProp.items.$ref) {
+                itemsResolved = resolveRef(resolvedProp.items.$ref, allSchemas) || resolvedProp.items
+              }
+              
+              if (itemsResolved.example !== undefined) {
+                example[propName] = [itemsResolved.example]
+                hasExample = true
+              } else if (itemsResolved.properties) {
+                const itemExample = generateFullExample(itemsResolved.properties, itemsResolved.required || [], allSchemas, cache, depth + 1)
+                if (itemExample) {
+                  example[propName] = [JSON.parse(itemExample)]
+                  hasExample = true
+                } else {
+                  example[propName] = []
+                  hasExample = true
+                }
+              } else {
+                example[propName] = []
+                hasExample = true
+              }
+            } else {
+              example[propName] = []
+              hasExample = true
+            }
+          }
+          else if (resolvedProp.properties && Object.keys(resolvedProp.properties).length > 0) {
+            const nestedExample = generateFullExample(resolvedProp.properties, resolvedProp.required || [], allSchemas, cache, depth + 1)
+            if (nestedExample) {
+              example[propName] = JSON.parse(nestedExample)
+              hasExample = true
+            }
+          }
+          else if (required.includes(propName) || depth === 0) {
+            if (resolvedProp.type === 'string') {
+              if (resolvedProp.format === 'uuid') {
+                example[propName] = '123e4567-e89b-12d3-a456-426614174000'
+              } else if (resolvedProp.format === 'date-time') {
+                example[propName] = '2026-01-31T16:00:00+01:00'
+              } else if (resolvedProp.format === 'email') {
+                example[propName] = 'admin@example.com'
+              } else {
+                example[propName] = 'string'
+              }
+              hasExample = true
+            } else if (resolvedProp.type === 'array') {
+              example[propName] = []
+              hasExample = true
+            } else if (resolvedProp.type === 'integer' || resolvedProp.type === 'number') {
+              example[propName] = 0
+              hasExample = true
+            } else if (resolvedProp.type === 'boolean') {
+              example[propName] = false
+              hasExample = true
+            } else if (resolvedProp.type === 'object') {
+              example[propName] = {}
+              hasExample = true
+            }
+          }
+        }
+
+        return hasExample ? JSON.stringify(example, null, 2) : null
+      }
+
+      function escapeHtml(text) {
+        const div = document.createElement('div')
+        div.textContent = text
+        return div.innerHTML
+      }
+
+      function typeOf(prop, allSchemas, cache, propName = '', depth = 0) {
+        if (depth > 3) return 'object'
+        
+        if (prop.enum && prop.enum.length > 0) {
+          if (propName) return `string (${propName})`
+          if (prop.title) return `string (${prop.title})`
+          return 'string (enum)'
+        }
+        
+        if (prop.type) {
+          let typeStr = prop.type
+          if (prop.title) {
+            typeStr += ` (${prop.title})`
+          } else if (prop.format) {
+            typeStr += ` <${prop.format}>`
+          }
+          
+          if (prop.type === 'array' && prop.items) {
+            let itemsProp = prop.items
+            if (itemsProp.$ref) {
+              itemsProp = resolveRef(itemsProp.$ref, allSchemas) || itemsProp
+            }
+            const itemType = typeOf(itemsProp, allSchemas, cache, '', depth + 1)
+            return `array [${itemType}]`
+          }
+          
+          return typeStr
+        }
+        
+        if (prop.$ref) {
+          return prop.$ref.split('/').pop()
+        }
+        
+        if (prop.oneOf) {
+          return prop.oneOf.slice(0, 2).map(s => {
+            let subProp = s.$ref ? (resolveRef(s.$ref, allSchemas) || s) : s
+            return typeOf(subProp, allSchemas, cache, '', depth + 1)
+          }).join(' | ')
+        }
+        
+        if (prop.anyOf) {
+          return prop.anyOf.slice(0, 2).map(s => {
+            let subProp = s.$ref ? (resolveRef(s.$ref, allSchemas) || s) : s
+            return typeOf(subProp, allSchemas, cache, '', depth + 1)
+          }).join(' | ')
+        }
+        
+        if (prop.allOf && prop.allOf.length > 0) {
+          let firstProp = prop.allOf[0]
+          if (firstProp.$ref) {
+            firstProp = resolveRef(firstProp.$ref, allSchemas) || firstProp
+          }
+          return typeOf(firstProp, allSchemas, cache, propName, depth + 1)
+        }
+        
+        return 'object'
+      }
+
+      function collectProperties(schema, allSchemas, cache, depth = 0, visitedRefs = new Set()) {
+        if (depth > 5) return {}
+        
+        let properties = {}
+        
+        if (schema.$ref) {
+          if (visitedRefs.has(schema.$ref)) return {}
+          visitedRefs.add(schema.$ref)
+          schema = resolveRef(schema.$ref, allSchemas) || schema
+        }
+        
+        if (schema.properties) {
+          properties = { ...schema.properties }
+        }
+        
+        if (schema.allOf) {
+          for (const subSchema of schema.allOf) {
+            if (subSchema.$ref && visitedRefs.has(subSchema.$ref)) continue
+            if (subSchema.$ref) visitedRefs.add(subSchema.$ref)
+            
+            let resolvedSubSchema = subSchema.$ref 
+              ? (resolveRef(subSchema.$ref, allSchemas) || subSchema)
+              : subSchema
+              
+            const subProps = collectProperties(resolvedSubSchema, allSchemas, cache, depth + 1, new Set(visitedRefs))
+            properties = { ...properties, ...subProps }
+          }
+        }
+        
+        return properties
+      }
+
+      function collectRequired(schema, allSchemas, cache, depth = 0) {
+        if (depth > 5) return []
+        
+        let required = []
+        
+        if (schema.$ref) {
+          schema = resolveRef(schema.$ref, allSchemas) || schema
+        }
+        
+        if (schema.required) {
+          required = [...schema.required]
+        }
+        
+        if (schema.allOf) {
+          for (const subSchema of schema.allOf) {
+            let resolvedSubSchema = subSchema.$ref
+              ? (resolveRef(subSchema.$ref, allSchemas) || subSchema)
+              : subSchema
+            const subRequired = collectRequired(resolvedSubSchema, allSchemas, cache, depth + 1)
+            required = [...required, ...subRequired]
+          }
+        }
+        
+        return [...new Set(required)]
+      }
+
+      function resolveRef(ref, allSchemas) {
+        if (!ref || typeof ref !== 'string') return null
+        const schemaName = ref.replace('#/components/schemas/', '')
+        return allSchemas?.[schemaName] || null
+      }
     </script>
   </body>
 </html>
