@@ -10361,6 +10361,412 @@
           }
         }
       }
+    },
+    "/_zudoku/tags/academic_session_model": {
+      "get": {
+        "tags": [
+          "academic_session_model"
+        ],
+        "summary": "Zudoku placeholder for tag academic_session_model",
+        "description": "Documentation only. Injected so Zudoku shows this tag in navigation.",
+        "responses": {
+          "204": {
+            "description": "No content"
+          }
+        }
+      }
+    },
+    "/_zudoku/tags/associations": {
+      "get": {
+        "tags": [
+          "associations"
+        ],
+        "summary": "Zudoku placeholder for tag associations",
+        "description": "Documentation only. Injected so Zudoku shows this tag in navigation.",
+        "responses": {
+          "204": {
+            "description": "No content"
+          }
+        }
+      }
+    },
+    "/_zudoku/tags/building_model": {
+      "get": {
+        "tags": [
+          "building_model"
+        ],
+        "summary": "Zudoku placeholder for tag building_model",
+        "description": "Documentation only. Injected so Zudoku shows this tag in navigation.",
+        "responses": {
+          "204": {
+            "description": "No content"
+          }
+        }
+      }
+    },
+    "/_zudoku/tags/components": {
+      "get": {
+        "tags": [
+          "components"
+        ],
+        "summary": "Zudoku placeholder for tag components",
+        "description": "Documentation only. Injected so Zudoku shows this tag in navigation.",
+        "responses": {
+          "204": {
+            "description": "No content"
+          }
+        }
+      }
+    },
+    "/_zudoku/tags/course_model": {
+      "get": {
+        "tags": [
+          "course_model"
+        ],
+        "summary": "Zudoku placeholder for tag course_model",
+        "description": "Documentation only. Injected so Zudoku shows this tag in navigation.",
+        "responses": {
+          "204": {
+            "description": "No content"
+          }
+        }
+      }
+    },
+    "/_zudoku/tags/course_offering_association_model": {
+      "get": {
+        "tags": [
+          "course_offering_association_model"
+        ],
+        "summary": "Zudoku placeholder for tag course_offering_association_model",
+        "description": "Documentation only. Injected so Zudoku shows this tag in navigation.",
+        "responses": {
+          "204": {
+            "description": "No content"
+          }
+        }
+      }
+    },
+    "/_zudoku/tags/course_offering_model": {
+      "get": {
+        "tags": [
+          "course_offering_model"
+        ],
+        "summary": "Zudoku placeholder for tag course_offering_model",
+        "description": "Documentation only. Injected so Zudoku shows this tag in navigation.",
+        "responses": {
+          "204": {
+            "description": "No content"
+          }
+        }
+      }
+    },
+    "/_zudoku/tags/data_model": {
+      "get": {
+        "tags": [
+          "data_model"
+        ],
+        "summary": "Zudoku placeholder for tag data_model",
+        "description": "Documentation only. Injected so Zudoku shows this tag in navigation.",
+        "responses": {
+          "204": {
+            "description": "No content"
+          }
+        }
+      }
+    },
+    "/_zudoku/tags/document_model": {
+      "get": {
+        "tags": [
+          "document_model"
+        ],
+        "summary": "Zudoku placeholder for tag document_model",
+        "description": "Documentation only. Injected so Zudoku shows this tag in navigation.",
+        "responses": {
+          "204": {
+            "description": "No content"
+          }
+        }
+      }
+    },
+    "/_zudoku/tags/group_model": {
+      "get": {
+        "tags": [
+          "group_model"
+        ],
+        "summary": "Zudoku placeholder for tag group_model",
+        "description": "Documentation only. Injected so Zudoku shows this tag in navigation.",
+        "responses": {
+          "204": {
+            "description": "No content"
+          }
+        }
+      }
+    },
+    "/_zudoku/tags/learning_component_model": {
+      "get": {
+        "tags": [
+          "learning_component_model"
+        ],
+        "summary": "Zudoku placeholder for tag learning_component_model",
+        "description": "Documentation only. Injected so Zudoku shows this tag in navigation.",
+        "responses": {
+          "204": {
+            "description": "No content"
+          }
+        }
+      }
+    },
+    "/_zudoku/tags/learning_component_offering_association_model": {
+      "get": {
+        "tags": [
+          "learning_component_offering_association_model"
+        ],
+        "summary": "Zudoku placeholder for tag learning_component_offering_association_model",
+        "description": "Documentation only. Injected so Zudoku shows this tag in navigation.",
+        "responses": {
+          "204": {
+            "description": "No content"
+          }
+        }
+      }
+    },
+    "/_zudoku/tags/learning_component_offering_model": {
+      "get": {
+        "tags": [
+          "learning_component_offering_model"
+        ],
+        "summary": "Zudoku placeholder for tag learning_component_offering_model",
+        "description": "Documentation only. Injected so Zudoku shows this tag in navigation.",
+        "responses": {
+          "204": {
+            "description": "No content"
+          }
+        }
+      }
+    },
+    "/_zudoku/tags/learning_outcome_model": {
+      "get": {
+        "tags": [
+          "learning_outcome_model"
+        ],
+        "summary": "Zudoku placeholder for tag learning_outcome_model",
+        "description": "Documentation only. Injected so Zudoku shows this tag in navigation.",
+        "responses": {
+          "204": {
+            "description": "No content"
+          }
+        }
+      }
+    },
+    "/_zudoku/tags/membership_model": {
+      "get": {
+        "tags": [
+          "membership_model"
+        ],
+        "summary": "Zudoku placeholder for tag membership_model",
+        "description": "Documentation only. Injected so Zudoku shows this tag in navigation.",
+        "responses": {
+          "204": {
+            "description": "No content"
+          }
+        }
+      }
+    },
+    "/_zudoku/tags/memberships": {
+      "get": {
+        "tags": [
+          "memberships"
+        ],
+        "summary": "Zudoku placeholder for tag memberships",
+        "description": "Documentation only. Injected so Zudoku shows this tag in navigation.",
+        "responses": {
+          "204": {
+            "description": "No content"
+          }
+        }
+      }
+    },
+    "/_zudoku/tags/news": {
+      "get": {
+        "tags": [
+          "news"
+        ],
+        "summary": "Zudoku placeholder for tag news",
+        "description": "Documentation only. Injected so Zudoku shows this tag in navigation.",
+        "responses": {
+          "204": {
+            "description": "No content"
+          }
+        }
+      }
+    },
+    "/_zudoku/tags/organisation_model": {
+      "get": {
+        "tags": [
+          "organisation_model"
+        ],
+        "summary": "Zudoku placeholder for tag organisation_model",
+        "description": "Documentation only. Injected so Zudoku shows this tag in navigation.",
+        "responses": {
+          "204": {
+            "description": "No content"
+          }
+        }
+      }
+    },
+    "/_zudoku/tags/person_model": {
+      "get": {
+        "tags": [
+          "person_model"
+        ],
+        "summary": "Zudoku placeholder for tag person_model",
+        "description": "Documentation only. Injected so Zudoku shows this tag in navigation.",
+        "responses": {
+          "204": {
+            "description": "No content"
+          }
+        }
+      }
+    },
+    "/_zudoku/tags/programme_model": {
+      "get": {
+        "tags": [
+          "programme_model"
+        ],
+        "summary": "Zudoku placeholder for tag programme_model",
+        "description": "Documentation only. Injected so Zudoku shows this tag in navigation.",
+        "responses": {
+          "204": {
+            "description": "No content"
+          }
+        }
+      }
+    },
+    "/_zudoku/tags/programme_offering_association_model": {
+      "get": {
+        "tags": [
+          "programme_offering_association_model"
+        ],
+        "summary": "Zudoku placeholder for tag programme_offering_association_model",
+        "description": "Documentation only. Injected so Zudoku shows this tag in navigation.",
+        "responses": {
+          "204": {
+            "description": "No content"
+          }
+        }
+      }
+    },
+    "/_zudoku/tags/programme_offering_model": {
+      "get": {
+        "tags": [
+          "programme_offering_model"
+        ],
+        "summary": "Zudoku placeholder for tag programme_offering_model",
+        "description": "Documentation only. Injected so Zudoku shows this tag in navigation.",
+        "responses": {
+          "204": {
+            "description": "No content"
+          }
+        }
+      }
+    },
+    "/_zudoku/tags/room_model": {
+      "get": {
+        "tags": [
+          "room_model"
+        ],
+        "summary": "Zudoku placeholder for tag room_model",
+        "description": "Documentation only. Injected so Zudoku shows this tag in navigation.",
+        "responses": {
+          "204": {
+            "description": "No content"
+          }
+        }
+      }
+    },
+    "/_zudoku/tags/security": {
+      "get": {
+        "tags": [
+          "security"
+        ],
+        "summary": "Zudoku placeholder for tag security",
+        "description": "Documentation only. Injected so Zudoku shows this tag in navigation.",
+        "responses": {
+          "204": {
+            "description": "No content"
+          }
+        }
+      }
+    },
+    "/_zudoku/tags/service_model": {
+      "get": {
+        "tags": [
+          "service_model"
+        ],
+        "summary": "Zudoku placeholder for tag service_model",
+        "description": "Documentation only. Injected so Zudoku shows this tag in navigation.",
+        "responses": {
+          "204": {
+            "description": "No content"
+          }
+        }
+      }
+    },
+    "/_zudoku/tags/test_component_model": {
+      "get": {
+        "tags": [
+          "test_component_model"
+        ],
+        "summary": "Zudoku placeholder for tag test_component_model",
+        "description": "Documentation only. Injected so Zudoku shows this tag in navigation.",
+        "responses": {
+          "204": {
+            "description": "No content"
+          }
+        }
+      }
+    },
+    "/_zudoku/tags/test_component_offering_association_attempt_model": {
+      "get": {
+        "tags": [
+          "test_component_offering_association_attempt_model"
+        ],
+        "summary": "Zudoku placeholder for tag test_component_offering_association_attempt_model",
+        "description": "Documentation only. Injected so Zudoku shows this tag in navigation.",
+        "responses": {
+          "204": {
+            "description": "No content"
+          }
+        }
+      }
+    },
+    "/_zudoku/tags/test_component_offering_association_model": {
+      "get": {
+        "tags": [
+          "test_component_offering_association_model"
+        ],
+        "summary": "Zudoku placeholder for tag test_component_offering_association_model",
+        "description": "Documentation only. Injected so Zudoku shows this tag in navigation.",
+        "responses": {
+          "204": {
+            "description": "No content"
+          }
+        }
+      }
+    },
+    "/_zudoku/tags/test_component_offering_model": {
+      "get": {
+        "tags": [
+          "test_component_offering_model"
+        ],
+        "summary": "Zudoku placeholder for tag test_component_offering_model",
+        "description": "Documentation only. Injected so Zudoku shows this tag in navigation.",
+        "responses": {
+          "204": {
+            "description": "No content"
+          }
+        }
+      }
     }
   },
   "components": {
