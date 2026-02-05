@@ -37,55 +37,55 @@ export default {
       ul:has(> a[data-anchor^="zudoku-placeholder"]:only-child) {
         display: none !important;
       }
-      
-      /* ========================================
-         GENERIEKE REGELS VOOR ALLE SCHEMAS
-         Detectie: gebruik body class of check of er een h1#description bestaat
-         ======================================== */
-      
-      /* Schema pages hebben h1#description in een sibling div.mb-8 */
-      /* Target de parent container die beide bevat */
-      
-      /* Verberg h2 title op schema pages */
-      body:has(h1#description) .grid > h2 {
-        display: none !important;
-      }
-      
-      /* Verberg GET badge en /_models/XXX path op schema pages */
-      body:has(h1#description) .grid > div.text-sm.flex.gap-2.font-mono.col-span-full {
-        display: none !important;
-      }
-      
-      /* Verberg eerste separator op schema pages */
-      body:has(h1#description) .grid > div.flex.flex-col.gap-4 > div[data-slot="separator"]:first-child {
-        display: none !important;
-      }
-      
-      /* Verberg "Responses" h3 heading ALLEEN op schema pages */
-      body:has(h1#description) .grid h3[id$="/responses"] {
-        display: none !important;
-      }
-      
-      /* Verberg "200" badge en description header ALLEEN op schema pages */
-      body:has(h1#description) .grid h3[id$="/responses"] + div [data-slot="badge"],
-      body:has(h1#description) .grid h3[id$="/responses"] + div header[data-slot="frame-panel-header"] {
-        display: none !important;
-      }
-      
-      /* Verberg cURL box ALLEEN op schema pages */
-      body:has(h1#description) .grid > aside > [data-slot="sidecar-box-root"]:first-of-type {
-        display: none !important;
-      }
-      
-      /* Verberg "Endpoint" regel op schema pages */
-      div.mb-8:has(h1#description) div.flex.items-center.gap-1\\.5.flex-nowrap {
-        display: none !important;
-      }
-      
-      /* Verberg schemadefinition div */
-      div.prose:has(schemadefinition) {
-        display: none !important;
-      }
-    `
+
+
+/* ===== Zudoku injected MODEL operations (zudoku-model-for-*) ===== */
+
+
+/* Hide nav items for injected model pages */
+a[data-anchor^="zudoku-model-for-"] {
+  display: none !important;
+}
+ul:has(> a[data-anchor^="zudoku-model-for-"]:only-child) {
+  display: none !important;
+}
+
+
+/* Hide the injected operation title + method/path line */
+.grid:has(h2[id^="zudoku-model-for-"]) > h2[id^="zudoku-model-for-"] {
+  display: none !important;
+}
+.grid:has(h2[id^="zudoku-model-for-"]) > h2[id^="zudoku-model-for-"] + div {
+  display: none !important;
+}
+
+
+/* Hide only the request/cURL sidecar (first box), keep Example Responses on the right */
+.grid:has(h2[id^="zudoku-model-for-"])
+  aside > div[data-slot="sidecar-box-root"]:first-of-type {
+  display: none !important;
+}
+
+
+/* Hide the "Documentation only..." prose block on the left */
+.grid:has(h2[id^="zudoku-model-for-"])
+  .flex.flex-col.gap-4:has(> .prose) > .prose {
+  display: none !important;
+}
+
+
+/* Hide the top response header area that contains "200 OK" and the grey summary text.
+   Keep the actual schema/properties block (frame-panel) intact. */
+.grid:has(h2[id^="zudoku-model-for-"])
+  div[data-slot="frame"] > div.flex.flex-col.text-muted-foreground {
+  display: none !important;
+}
+/* Verberg chevron voor tags die eindigen op -model */
+a[href$="-model"] > div > button,
+a[href$="-model/"] > div > button {
+  display: none !important;
+}
+
+`
   },
 };
