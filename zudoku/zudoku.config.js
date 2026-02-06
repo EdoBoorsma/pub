@@ -13,6 +13,19 @@ export default {
     path: "api",
     options: {
       expandAllTags: false
+    },
+    transformExamples: ({ content, operation }) => {
+      return content.map((contentItem) => {
+        // Als er geen example is, genereer dan een uit het schema
+        if (!contentItem.example && !contentItem.examples && contentItem.schema) {
+          try {
+            contentItem.example = generateExampleFromSchema(contentItem.schema);
+          } catch (error) {
+            console.warn(`Could not generate example for ${operation.operationId}:`, error);
+          }
+        }
+        return contentItem;
+      });
     }
   },
   theme: {
@@ -39,7 +52,9 @@ export default {
       }
 
 
+
 /* ===== Zudoku injected MODEL operations (zudoku-model-for-*) ===== */
+
 
 
 /* Hide nav items for injected model pages */
@@ -51,6 +66,7 @@ ul:has(> a[data-anchor^="zudoku-model-for-"]:only-child) {
 }
 
 
+
 /* Hide the injected operation title + method/path line */
 .grid:has(h2[id^="zudoku-model-for-"]) > h2[id^="zudoku-model-for-"] {
   display: none !important;
@@ -60,6 +76,7 @@ ul:has(> a[data-anchor^="zudoku-model-for-"]:only-child) {
 }
 
 
+
 /* Hide only the request/cURL sidecar (first box), keep Example Responses on the right */
 .grid:has(h2[id^="zudoku-model-for-"])
   aside > div[data-slot="sidecar-box-root"]:first-of-type {
@@ -67,11 +84,13 @@ ul:has(> a[data-anchor^="zudoku-model-for-"]:only-child) {
 }
 
 
+
 /* Hide the "Documentation only..." prose block on the left */
 .grid:has(h2[id^="zudoku-model-for-"])
   .flex.flex-col.gap-4:has(> .prose) > .prose {
   display: none !important;
 }
+
 
 
 /* Hide the top response header area that contains "200 OK" and the grey summary text.
@@ -86,6 +105,73 @@ a[href$="-model/"] > div > button {
   display: none !important;
 }
 
+
 `
   },
 };
+
+function generateExampleFromSchema(schema) {
+  if (!schema) return null;
+  
+  // Als er al een example op schema niveau is, gebruik die
+  if (schema.example !== undefined) {
+    return schema.example;
+  }
+  
+  // Handle arrays
+  if (schema.type === 'array') {
+    if (schema.items) {
+      const itemExample = generateExampleFromSchema(schema.items);
+      return itemExample ? [itemExample] : [];
+    }
+    return [];
+  }
+  
+  // Handle objects
+  if (schema.type === 'object' || schema.properties) {
+    const example = {};
+    
+    if (schema.properties) {
+      for (const [key, prop] of Object.entries(schema.properties)) {
+        const value = generateExampleFromSchema(prop);
+        if (value !== null) {
+          example[key] = value;
+        }
+      }
+    }
+    
+    return Object.keys(example).length > 0 ? example : null;
+  }
+  
+  // Handle primitives met example
+  if (schema.example !== undefined) {
+    return schema.example;
+  }
+  
+  // Handle enums
+  if (schema.enum && schema.enum.length > 0) {
+    return schema.enum[0];
+  }
+  
+  // Handle defaults
+  if (schema.default !== undefined) {
+    return schema.default;
+  }
+  
+  // Fallback op basis van type
+  switch (schema.type) {
+    case 'string':
+      return schema.format === 'date-time' ? '2024-01-01T00:00:00Z' :
+             schema.format === 'date' ? '2024-01-01' :
+             schema.format === 'email' ? 'user@example.com' :
+             schema.format === 'uri' ? 'https://example.com' :
+             'string';
+    case 'number':
+    case 'integer':
+      return 0;
+    case 'boolean':
+      return false;
+    default:
+      return null;
+  }
+}

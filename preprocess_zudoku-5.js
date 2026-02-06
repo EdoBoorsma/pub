@@ -5,6 +5,7 @@
  * Creates flat allOf structures without nesting
  * Also injects an internal placeholder operation for tags
  * that exist in tags/x-tagGroups but are not used by any operation.
+ * Generates examples from schema properties for responses without examples.
  */
 
 const fs = require('fs');
@@ -70,6 +71,7 @@ function flattenAllOfForZudoku(schema, spec) {
   if (anyOfSection) {
     inlineObj.anyOf = anyOfSection;
   }
+
   flatAllOf.push(inlineObj);
 
   const result = {
@@ -79,7 +81,202 @@ function flattenAllOfForZudoku(schema, spec) {
   if (requiredFields.length > 0) {
     result.required = requiredFields;
   }
+
   return result;
+}
+
+function generateExampleFromSchema(schema, spec, seenRefs = [], depth = 0) {
+  if (!schema) return null;
+  
+  // Prevent too deep nesting
+  if (depth > 15) return null;
+  
+  // Resolve $ref if present
+  if (schema.$ref) {
+    // Check if this ref is in the current path (circular in THIS branch)
+    // Count how many times we've seen this ref in the current branch
+    const refCount = seenRefs.filter(r => r === schema.$ref).length;
+    
+    // Allow seeing a ref once (depth 0), but not twice (would be circular)
+    // For arrays at shallow depth, allow one level of recursion
+    if (refCount >= 1 && depth > 3) {
+      return null; // Skip deep circular references
+    }
+    
+    if (refCount >= 2) {
+      return null; // Never allow more than 2 levels deep
+    }
+    
+    // Add to seen refs for this branch
+    const newSeenRefs = [...seenRefs, schema.$ref];
+    
+    const resolved = resolveRef(schema.$ref, spec);
+    if (resolved) {
+      return generateExampleFromSchema(resolved, spec, newSeenRefs, depth + 1);
+    }
+    return null;
+  }
+  
+  if (schema.example !== undefined) {
+    return schema.example;
+  }
+  
+  // Handle allOf - merge all properties
+  if (schema.allOf) {
+    const merged = {};
+    for (const subSchema of schema.allOf) {
+      const subExample = generateExampleFromSchema(subSchema, spec, seenRefs, depth + 1);
+      if (subExample && typeof subExample === 'object' && !Array.isArray(subExample)) {
+        Object.assign(merged, subExample);
+      }
+    }
+    return Object.keys(merged).length > 0 ? merged : null;
+  }
+  
+  // Handle oneOf - take first option
+  if (schema.oneOf && schema.oneOf.length > 0) {
+    return generateExampleFromSchema(schema.oneOf[0], spec, seenRefs, depth + 1);
+  }
+  
+  // Handle anyOf - take first option
+  if (schema.anyOf && schema.anyOf.length > 0) {
+    return generateExampleFromSchema(schema.anyOf[0], spec, seenRefs, depth + 1);
+  }
+  
+  // Handle type as array (e.g., ["null", "object"])
+  let type = schema.type;
+  if (Array.isArray(type)) {
+    // Filter out null and take first non-null type
+    const nonNullTypes = type.filter(t => t !== 'null');
+    type = nonNullTypes.length > 0 ? nonNullTypes[0] : type[0];
+  }
+  
+  if (type === 'array') {
+    if (schema.items) {
+      const itemExample = generateExampleFromSchema(schema.items, spec, seenRefs, depth + 1);
+      // At shallow depth (< 4), include items to show structure
+      // This allows one level of self-referencing arrays like children: [AcademicSession]
+      if (itemExample !== null && depth < 4) {
+        return [itemExample];
+      }
+    }
+    return [];
+  }
+  
+  if (type === 'object' || schema.properties) {
+    const example = {};
+    
+    if (schema.properties) {
+      for (const [key, prop] of Object.entries(schema.properties)) {
+        const value = generateExampleFromSchema(prop, spec, seenRefs, depth + 1);
+        if (value !== null) {
+          example[key] = value;
+        }
+      }
+    }
+    
+    return Object.keys(example).length > 0 ? example : null;
+  }
+  
+  if (schema.enum && schema.enum.length > 0) {
+    return schema.enum[0];
+  }
+  
+  if (schema.default !== undefined) {
+    return schema.default;
+  }
+  
+  switch (type) {
+    case 'string':
+      return schema.format === 'date-time' ? '2024-01-01T00:00:00Z' :
+             schema.format === 'date' ? '2024-01-01' :
+             schema.format === 'email' ? 'user@example.com' :
+             schema.format === 'uri' ? 'https://example.com' :
+             schema.format === 'uuid' ? '123e4567-e89b-12d3-a456-426614174000' :
+             'string';
+    case 'number':
+      return 0;
+    case 'integer':
+      return 0;
+    case 'boolean':
+      return false;
+    case 'null':
+      return null;
+    default:
+      return null;
+  }
+}
+
+function addExamplesToResponses(spec) {
+  let addedCount = 0;
+  let totalResponses = 0;
+  let hasExample = 0;
+  let noSchema = 0;
+  let emptyGenerated = 0;
+  let debugDetails = [];
+  
+  for (const [path, methods] of Object.entries(spec.paths || {})) {
+    for (const [method, operation] of Object.entries(methods)) {
+      if (typeof operation !== 'object') continue;
+      
+      if (operation.responses) {
+        for (const [status, response] of Object.entries(operation.responses)) {
+          if (!response || typeof response !== 'object') continue;
+          
+          if (response.content) {
+            for (const [mediaType, content] of Object.entries(response.content)) {
+              if (!content || typeof content !== 'object') continue;
+              
+              totalResponses++;
+              
+              if (content.example || content.examples) {
+                hasExample++;
+                continue;
+              }
+              
+              if (!content.schema) {
+                noSchema++;
+                continue;
+              }
+              
+              const generated = generateExampleFromSchema(content.schema, spec, []);
+              
+              if (!generated || (typeof generated === 'object' && Object.keys(generated).length === 0)) {
+                emptyGenerated++;
+                debugDetails.push({
+                  path: `${method.toUpperCase()} ${path} (${status})`,
+                  schema: content.schema.$ref || 'inline',
+                  generated: generated
+                });
+                continue;
+              }
+              
+              content.example = generated;
+              addedCount++;
+            }
+          }
+        }
+      }
+    }
+  }
+  
+  console.log(`\n📊 Response analysis:`);
+  console.log(`  Total responses with content: ${totalResponses}`);
+  console.log(`  Already had examples: ${hasExample}`);
+  console.log(`  No schema: ${noSchema}`);
+  console.log(`  Generated empty (failed): ${emptyGenerated}`);
+  console.log(`  ✅ Added examples: ${addedCount}`);
+  
+  if (debugDetails.length > 0) {
+    console.log(`\n⚠️  First 5 failed generations:`);
+    for (let i = 0; i < Math.min(5, debugDetails.length); i++) {
+      console.log(`  - ${debugDetails[i].path}`);
+      console.log(`    Schema: ${debugDetails[i].schema}`);
+      console.log(`    Generated: ${JSON.stringify(debugDetails[i].generated)}`);
+    }
+  }
+  
+  return addedCount;
 }
 
 function slugifyTag(tag) {
@@ -166,12 +363,14 @@ function injectModelOperations(spec) {
   for (const [p, methods] of Object.entries(spec.paths)) {
     if (!p.startsWith('/_zudoku/tags/')) continue;
     if (!methods || typeof methods !== 'object') continue;
+
     for (const [method, op] of Object.entries(methods)) {
       if (!isInjectedPlaceholderOperation(op)) continue;
       const tags = Array.isArray(op.tags) ? op.tags : [];
       if (!tags.some(x => String(x).endsWith('_model'))) continue;
       delete spec.paths[p][method];
     }
+
     if (Object.keys(spec.paths[p]).length === 0) {
       delete spec.paths[p];
     }
@@ -186,10 +385,9 @@ function markTagsWithOnlyInjected(spec) {
   for (const methods of Object.values(spec.paths || {})) {
     for (const op of Object.values(methods || {})) {
       if (!op || typeof op !== 'object' || !Array.isArray(op.tags)) continue;
-      
       const summary = String(op.summary || '').toLowerCase();
       const isInjected = summary.startsWith('zudoku placeholder') || summary.startsWith('zudoku model');
-      
+
       for (const tag of op.tags) {
         if (!tagStats.has(tag)) {
           tagStats.set(tag, { real: 0, injected: 0 });
@@ -207,7 +405,6 @@ function markTagsWithOnlyInjected(spec) {
   let marked = 0;
   for (const t of (spec.tags || [])) {
     if (!t || typeof t !== 'object' || !t.name) continue;
-    
     const stats = tagStats.get(t.name);
     if (stats && stats.real === 0 && stats.injected > 0) {
       // Voeg custom property toe voor CSS matching
@@ -230,6 +427,7 @@ function preprocessForZudoku(inputFile, outputFile) {
   for (const [path, methods] of Object.entries(spec.paths || {})) {
     for (const [method, operation] of Object.entries(methods)) {
       if (typeof operation !== 'object') continue;
+
       const requestBody = operation.requestBody?.content?.['application/json']?.schema;
       if (!requestBody) continue;
 
@@ -246,6 +444,9 @@ function preprocessForZudoku(inputFile, outputFile) {
     }
   }
 
+  // Add examples to responses without examples
+  addExamplesToResponses(spec);
+
   // Inject model operations (schema-driven)
   const injectedModels = injectModelOperations(spec);
 
@@ -254,6 +455,7 @@ function preprocessForZudoku(inputFile, outputFile) {
   for (const t of (spec.tags || [])) {
     if (t && typeof t === 'object' && t.name) definedTags.add(t.name);
   }
+
   for (const g of (spec['x-tagGroups'] || [])) {
     for (const t of ((g && g.tags) || [])) {
       if (typeof t === 'string') definedTags.add(t);
@@ -276,6 +478,7 @@ function preprocessForZudoku(inputFile, outputFile) {
     if (usedTags.has(tag)) continue;
     const path = `/_zudoku/tags/${slugifyTag(tag) || 'tag'}`;
     if (!spec.paths[path]) spec.paths[path] = {};
+
     spec.paths[path].get = {
       tags: [tag],
       summary: `Zudoku placeholder for tag ${tag}`,
@@ -298,9 +501,10 @@ function preprocessForZudoku(inputFile, outputFile) {
 
 if (require.main === module) {
   if (process.argv.length !== 4) {
-    console.log('Usage: preprocess_zudoku.js <input.json> <output.json>');
+    console.log('Usage: preprocess_zudoku.js <input> <output>');
     process.exit(1);
   }
+
   preprocessForZudoku(process.argv[2], process.argv[3]);
 }
 

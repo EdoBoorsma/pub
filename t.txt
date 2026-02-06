@@ -1,0 +1,10 @@
+
+📊 Response analysis:
+  Total responses with content: 83
+  Already had examples: 1
+  No schema: 0
+  Generated empty (failed): 0
+  ✅ Added examples: 82
+✅ Marked 29 tags with only injected operations
+✅ Zudoku version created: ooapi.zudoku.json
+✅ Injected placeholder operations (internal): 29
