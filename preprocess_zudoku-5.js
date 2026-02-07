@@ -288,7 +288,7 @@ function slugifyTag(tag) {
 
 function parseSchemaRefFromDescription(desc) {
   if (!desc) return null;
-  const m = String(desc).match(/<schema>(.*?)<\/schema>/i);
+  const m = String(desc).match(/<SchemaDefinition\s+schemaRef\s*=\s*"([^"]+)"\s*\/?>/i);
   return m ? m[1] : null;
 }
 

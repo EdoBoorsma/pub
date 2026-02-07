@@ -29,7 +29,7 @@
     {
       "name": "academic_session_model",
       "x-displayName": "AcademicSession",
-      "description": "<SchemaDefinition schemaRef=\"#/components/schemas/AcademicSession\" />\n",
+      "description": "Schema: AcademicSession.",
       "x-zudoku-hide-chevron": true
     },
     {
@@ -41,7 +41,7 @@
     {
       "name": "building_model",
       "x-displayName": "Building",
-      "description": "<SchemaDefinition schemaRef=\"#/components/schemas/Building\" />\n",
+      "description": "Schema: Building.",
       "x-zudoku-hide-chevron": true
     },
     {
@@ -64,19 +64,19 @@
     {
       "name": "course_model",
       "x-displayName": "Course",
-      "description": "<SchemaDefinition schemaRef=\"#/components/schemas/Course\" />\n",
+      "description": "Schema: Course.",
       "x-zudoku-hide-chevron": true
     },
     {
       "name": "course_offering_association_model",
       "x-displayName": "CourseOfferingAssociation",
-      "description": "<SchemaDefinition schemaRef=\"#/components/schemas/CourseOfferingAssociation\" />\n",
+      "description": "Schema: CourseOfferingAssociation.",
       "x-zudoku-hide-chevron": true
     },
     {
       "name": "course_offering_model",
       "x-displayName": "CourseOffering",
-      "description": "<SchemaDefinition schemaRef=\"#/components/schemas/CourseOffering\" />\n",
+      "description": "Schema: CourseOffering.",
       "x-zudoku-hide-chevron": true
     },
     {
@@ -92,7 +92,7 @@
     {
       "name": "document_model",
       "x-displayName": "Document",
-      "description": "<SchemaDefinition schemaRef=\"#/components/schemas/Document\" />\n",
+      "description": "Schema: Document.",
       "x-zudoku-hide-chevron": true
     },
     {
@@ -102,7 +102,7 @@
     {
       "name": "group_model",
       "x-displayName": "Group",
-      "description": "<SchemaDefinition schemaRef=\"#/components/schemas/Group\" />\n",
+      "description": "Schema: Group.",
       "x-zudoku-hide-chevron": true
     },
     {
@@ -128,31 +128,31 @@
     {
       "name": "learning_component_model",
       "x-displayName": "LearningComponent",
-      "description": "<SchemaDefinition schemaRef=\"#/components/schemas/LearningComponent\" />\n",
+      "description": "Schema: LearningComponent.",
       "x-zudoku-hide-chevron": true
     },
     {
       "name": "learning_component_offering_association_model",
       "x-displayName": "LearningComponentOfferingAssociation",
-      "description": "<SchemaDefinition\n  schemaRef=\"#/components/schemas/LearningComponentOfferingAssociation\" />\n",
+      "description": "Schema: LearningComponentOfferingAssociation.",
       "x-zudoku-hide-chevron": true
     },
     {
       "name": "learning_component_offering_model",
       "x-displayName": "LearningComponentOffering",
-      "description": "<SchemaDefinition schemaRef=\"#/components/schemas/LearningComponentOffering\" />\n",
+      "description": "Schema: LearningComponentOffering.",
       "x-zudoku-hide-chevron": true
     },
     {
       "name": "learning_outcome_model",
       "x-displayName": "LearningOutcome",
-      "description": "<SchemaDefinition schemaRef=\"#/components/schemas/LearningOutcome\" />\n",
+      "description": "Schema: LearningOutcome.",
       "x-zudoku-hide-chevron": true
     },
     {
       "name": "membership_model",
       "x-displayName": "Membership",
-      "description": "<SchemaDefinition schemaRef=\"#/components/schemas/Membership\" />\n",
+      "description": "Schema: Membership.",
       "x-zudoku-hide-chevron": true
     },
     {
@@ -168,7 +168,7 @@
     {
       "name": "organisation_model",
       "x-displayName": "Organisation",
-      "description": "<SchemaDefinition schemaRef=\"#/components/schemas/Organisation\" />\n",
+      "description": "Schema: Organisation.",
       "x-zudoku-hide-chevron": true
     },
     {
@@ -178,7 +178,7 @@
     {
       "name": "person_model",
       "x-displayName": "Person",
-      "description": "<SchemaDefinition schemaRef=\"#/components/schemas/Person\" />\n",
+      "description": "Schema: Person.",
       "x-zudoku-hide-chevron": true
     },
     {
@@ -196,19 +196,19 @@
     {
       "name": "programme_model",
       "x-displayName": "Programme",
-      "description": "<SchemaDefinition schemaRef=\"#/components/schemas/Programme\" />\n",
+      "description": "Schema: Programme.",
       "x-zudoku-hide-chevron": true
     },
     {
       "name": "programme_offering_association_model",
       "x-displayName": "ProgrammeOfferingAssociation",
-      "description": "<SchemaDefinition\n  schemaRef=\"#/components/schemas/ProgrammeOfferingAssociation\" />\n",
+      "description": "Schema: ProgrammeOfferingAssociation.",
       "x-zudoku-hide-chevron": true
     },
     {
       "name": "programme_offering_model",
       "x-displayName": "ProgrammeOffering",
-      "description": "<SchemaDefinition schemaRef=\"#/components/schemas/ProgrammeOffering\" />\n",
+      "description": "Schema: ProgrammeOffering.",
       "x-zudoku-hide-chevron": true
     },
     {
@@ -218,7 +218,7 @@
     {
       "name": "room_model",
       "x-displayName": "Room",
-      "description": "<SchemaDefinition schemaRef=\"#/components/schemas/Room\" />\n",
+      "description": "Schema: Room.",
       "x-zudoku-hide-chevron": true
     },
     {
@@ -237,7 +237,7 @@
     {
       "name": "service_model",
       "x-displayName": "Service",
-      "description": "<SchemaDefinition schemaRef=\"#/components/schemas/Service\" />\n",
+      "description": "Schema: Service.",
       "x-zudoku-hide-chevron": true
     },
     {
@@ -259,25 +259,25 @@
     {
       "name": "test_component_model",
       "x-displayName": "TestComponent",
-      "description": "<SchemaDefinition schemaRef=\"#/components/schemas/TestComponent\" />\n",
+      "description": "Schema: TestComponent.",
       "x-zudoku-hide-chevron": true
     },
     {
       "name": "test_component_offering_association_attempt_model",
       "x-displayName": "TestComponentOfferingAssociationAttempt",
-      "description": "<SchemaDefinition schemaRef=\"#/components/schemas/TestComponentOfferingAssociationAttemptFull\" />\n",
+      "description": "Schema: TestComponentOfferingAssociationAttempt.",
       "x-zudoku-hide-chevron": true
     },
     {
       "name": "test_component_offering_association_model",
       "x-displayName": "TestComponentOfferingAssocation",
-      "description": "<SchemaDefinition\n  schemaRef=\"#/components/schemas/TestComponentOfferingAssociation\" />\n",
+      "description": "Schema: TestComponentOfferingAssocation.",
       "x-zudoku-hide-chevron": true
     },
     {
       "name": "test_component_offering_model",
       "x-displayName": "TestComponentOffering",
-      "description": "<SchemaDefinition schemaRef=\"#/components/schemas/TestComponentOffering\" />\n",
+      "description": "Schema: TestComponentOffering.",
       "x-zudoku-hide-chevron": true
     }
   ],
@@ -22771,17 +22771,508 @@
         }
       }
     },
-    "/_zudoku/tags/academic_session_model": {
+    "/_zudoku/models/academicsession": {
       "get": {
         "tags": [
           "academic_session_model"
         ],
-        "summary": "Zudoku placeholder for tag academic_session_model",
-        "description": "Documentation only. Injected so Zudoku shows this tag in navigation.",
+        "summary": "Zudoku model for AcademicSession",
+        "description": "Documentation only. Injected so Zudoku renders this model schema.",
         "x-internal": true,
         "responses": {
-          "204": {
-            "description": "No content"
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AcademicSession"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/_zudoku/models/building": {
+      "get": {
+        "tags": [
+          "building_model"
+        ],
+        "summary": "Zudoku model for Building",
+        "description": "Documentation only. Injected so Zudoku renders this model schema.",
+        "x-internal": true,
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Building"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/_zudoku/models/course": {
+      "get": {
+        "tags": [
+          "course_model"
+        ],
+        "summary": "Zudoku model for Course",
+        "description": "Documentation only. Injected so Zudoku renders this model schema.",
+        "x-internal": true,
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Course"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/_zudoku/models/courseofferingassociation": {
+      "get": {
+        "tags": [
+          "course_offering_association_model"
+        ],
+        "summary": "Zudoku model for CourseOfferingAssociation",
+        "description": "Documentation only. Injected so Zudoku renders this model schema.",
+        "x-internal": true,
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CourseOfferingAssociation"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/_zudoku/models/courseoffering": {
+      "get": {
+        "tags": [
+          "course_offering_model"
+        ],
+        "summary": "Zudoku model for CourseOffering",
+        "description": "Documentation only. Injected so Zudoku renders this model schema.",
+        "x-internal": true,
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CourseOffering"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/_zudoku/models/document": {
+      "get": {
+        "tags": [
+          "document_model"
+        ],
+        "summary": "Zudoku model for Document",
+        "description": "Documentation only. Injected so Zudoku renders this model schema.",
+        "x-internal": true,
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Document"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/_zudoku/models/group": {
+      "get": {
+        "tags": [
+          "group_model"
+        ],
+        "summary": "Zudoku model for Group",
+        "description": "Documentation only. Injected so Zudoku renders this model schema.",
+        "x-internal": true,
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Group"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/_zudoku/models/learningcomponent": {
+      "get": {
+        "tags": [
+          "learning_component_model"
+        ],
+        "summary": "Zudoku model for LearningComponent",
+        "description": "Documentation only. Injected so Zudoku renders this model schema.",
+        "x-internal": true,
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LearningComponent"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/_zudoku/models/learningcomponentofferingassociation": {
+      "get": {
+        "tags": [
+          "learning_component_offering_association_model"
+        ],
+        "summary": "Zudoku model for LearningComponentOfferingAssociation",
+        "description": "Documentation only. Injected so Zudoku renders this model schema.",
+        "x-internal": true,
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LearningComponentOfferingAssociation"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/_zudoku/models/learningcomponentoffering": {
+      "get": {
+        "tags": [
+          "learning_component_offering_model"
+        ],
+        "summary": "Zudoku model for LearningComponentOffering",
+        "description": "Documentation only. Injected so Zudoku renders this model schema.",
+        "x-internal": true,
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LearningComponentOffering"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/_zudoku/models/learningoutcome": {
+      "get": {
+        "tags": [
+          "learning_outcome_model"
+        ],
+        "summary": "Zudoku model for LearningOutcome",
+        "description": "Documentation only. Injected so Zudoku renders this model schema.",
+        "x-internal": true,
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LearningOutcome"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/_zudoku/models/membership": {
+      "get": {
+        "tags": [
+          "membership_model"
+        ],
+        "summary": "Zudoku model for Membership",
+        "description": "Documentation only. Injected so Zudoku renders this model schema.",
+        "x-internal": true,
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Membership"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/_zudoku/models/organisation": {
+      "get": {
+        "tags": [
+          "organisation_model"
+        ],
+        "summary": "Zudoku model for Organisation",
+        "description": "Documentation only. Injected so Zudoku renders this model schema.",
+        "x-internal": true,
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Organisation"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/_zudoku/models/person": {
+      "get": {
+        "tags": [
+          "person_model"
+        ],
+        "summary": "Zudoku model for Person",
+        "description": "Documentation only. Injected so Zudoku renders this model schema.",
+        "x-internal": true,
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Person"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/_zudoku/models/programme": {
+      "get": {
+        "tags": [
+          "programme_model"
+        ],
+        "summary": "Zudoku model for Programme",
+        "description": "Documentation only. Injected so Zudoku renders this model schema.",
+        "x-internal": true,
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Programme"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/_zudoku/models/programmeofferingassociation": {
+      "get": {
+        "tags": [
+          "programme_offering_association_model"
+        ],
+        "summary": "Zudoku model for ProgrammeOfferingAssociation",
+        "description": "Documentation only. Injected so Zudoku renders this model schema.",
+        "x-internal": true,
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProgrammeOfferingAssociation"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/_zudoku/models/programmeoffering": {
+      "get": {
+        "tags": [
+          "programme_offering_model"
+        ],
+        "summary": "Zudoku model for ProgrammeOffering",
+        "description": "Documentation only. Injected so Zudoku renders this model schema.",
+        "x-internal": true,
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProgrammeOffering"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/_zudoku/models/room": {
+      "get": {
+        "tags": [
+          "room_model"
+        ],
+        "summary": "Zudoku model for Room",
+        "description": "Documentation only. Injected so Zudoku renders this model schema.",
+        "x-internal": true,
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Room"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/_zudoku/models/service": {
+      "get": {
+        "tags": [
+          "service_model"
+        ],
+        "summary": "Zudoku model for Service",
+        "description": "Documentation only. Injected so Zudoku renders this model schema.",
+        "x-internal": true,
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Service"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/_zudoku/models/testcomponent": {
+      "get": {
+        "tags": [
+          "test_component_model"
+        ],
+        "summary": "Zudoku model for TestComponent",
+        "description": "Documentation only. Injected so Zudoku renders this model schema.",
+        "x-internal": true,
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TestComponent"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/_zudoku/models/testcomponentofferingassociationattempt": {
+      "get": {
+        "tags": [
+          "test_component_offering_association_attempt_model"
+        ],
+        "summary": "Zudoku model for TestComponentOfferingAssociationAttempt",
+        "description": "Documentation only. Injected so Zudoku renders this model schema.",
+        "x-internal": true,
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TestComponentOfferingAssociationAttemptFull"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/_zudoku/models/testcomponentofferingassocation": {
+      "get": {
+        "tags": [
+          "test_component_offering_association_model"
+        ],
+        "summary": "Zudoku model for TestComponentOfferingAssocation",
+        "description": "Documentation only. Injected so Zudoku renders this model schema.",
+        "x-internal": true,
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TestComponentOfferingAssociation"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/_zudoku/models/testcomponentoffering": {
+      "get": {
+        "tags": [
+          "test_component_offering_model"
+        ],
+        "summary": "Zudoku model for TestComponentOffering",
+        "description": "Documentation only. Injected so Zudoku renders this model schema.",
+        "x-internal": true,
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TestComponentOffering"
+                }
+              }
+            }
           }
         }
       }
@@ -22792,21 +23283,6 @@
           "associations"
         ],
         "summary": "Zudoku placeholder for tag associations",
-        "description": "Documentation only. Injected so Zudoku shows this tag in navigation.",
-        "x-internal": true,
-        "responses": {
-          "204": {
-            "description": "No content"
-          }
-        }
-      }
-    },
-    "/_zudoku/tags/building_model": {
-      "get": {
-        "tags": [
-          "building_model"
-        ],
-        "summary": "Zudoku placeholder for tag building_model",
         "description": "Documentation only. Injected so Zudoku shows this tag in navigation.",
         "x-internal": true,
         "responses": {
@@ -22831,162 +23307,12 @@
         }
       }
     },
-    "/_zudoku/tags/course_model": {
-      "get": {
-        "tags": [
-          "course_model"
-        ],
-        "summary": "Zudoku placeholder for tag course_model",
-        "description": "Documentation only. Injected so Zudoku shows this tag in navigation.",
-        "x-internal": true,
-        "responses": {
-          "204": {
-            "description": "No content"
-          }
-        }
-      }
-    },
-    "/_zudoku/tags/course_offering_association_model": {
-      "get": {
-        "tags": [
-          "course_offering_association_model"
-        ],
-        "summary": "Zudoku placeholder for tag course_offering_association_model",
-        "description": "Documentation only. Injected so Zudoku shows this tag in navigation.",
-        "x-internal": true,
-        "responses": {
-          "204": {
-            "description": "No content"
-          }
-        }
-      }
-    },
-    "/_zudoku/tags/course_offering_model": {
-      "get": {
-        "tags": [
-          "course_offering_model"
-        ],
-        "summary": "Zudoku placeholder for tag course_offering_model",
-        "description": "Documentation only. Injected so Zudoku shows this tag in navigation.",
-        "x-internal": true,
-        "responses": {
-          "204": {
-            "description": "No content"
-          }
-        }
-      }
-    },
     "/_zudoku/tags/data_model": {
       "get": {
         "tags": [
           "data_model"
         ],
         "summary": "Zudoku placeholder for tag data_model",
-        "description": "Documentation only. Injected so Zudoku shows this tag in navigation.",
-        "x-internal": true,
-        "responses": {
-          "204": {
-            "description": "No content"
-          }
-        }
-      }
-    },
-    "/_zudoku/tags/document_model": {
-      "get": {
-        "tags": [
-          "document_model"
-        ],
-        "summary": "Zudoku placeholder for tag document_model",
-        "description": "Documentation only. Injected so Zudoku shows this tag in navigation.",
-        "x-internal": true,
-        "responses": {
-          "204": {
-            "description": "No content"
-          }
-        }
-      }
-    },
-    "/_zudoku/tags/group_model": {
-      "get": {
-        "tags": [
-          "group_model"
-        ],
-        "summary": "Zudoku placeholder for tag group_model",
-        "description": "Documentation only. Injected so Zudoku shows this tag in navigation.",
-        "x-internal": true,
-        "responses": {
-          "204": {
-            "description": "No content"
-          }
-        }
-      }
-    },
-    "/_zudoku/tags/learning_component_model": {
-      "get": {
-        "tags": [
-          "learning_component_model"
-        ],
-        "summary": "Zudoku placeholder for tag learning_component_model",
-        "description": "Documentation only. Injected so Zudoku shows this tag in navigation.",
-        "x-internal": true,
-        "responses": {
-          "204": {
-            "description": "No content"
-          }
-        }
-      }
-    },
-    "/_zudoku/tags/learning_component_offering_association_model": {
-      "get": {
-        "tags": [
-          "learning_component_offering_association_model"
-        ],
-        "summary": "Zudoku placeholder for tag learning_component_offering_association_model",
-        "description": "Documentation only. Injected so Zudoku shows this tag in navigation.",
-        "x-internal": true,
-        "responses": {
-          "204": {
-            "description": "No content"
-          }
-        }
-      }
-    },
-    "/_zudoku/tags/learning_component_offering_model": {
-      "get": {
-        "tags": [
-          "learning_component_offering_model"
-        ],
-        "summary": "Zudoku placeholder for tag learning_component_offering_model",
-        "description": "Documentation only. Injected so Zudoku shows this tag in navigation.",
-        "x-internal": true,
-        "responses": {
-          "204": {
-            "description": "No content"
-          }
-        }
-      }
-    },
-    "/_zudoku/tags/learning_outcome_model": {
-      "get": {
-        "tags": [
-          "learning_outcome_model"
-        ],
-        "summary": "Zudoku placeholder for tag learning_outcome_model",
-        "description": "Documentation only. Injected so Zudoku shows this tag in navigation.",
-        "x-internal": true,
-        "responses": {
-          "204": {
-            "description": "No content"
-          }
-        }
-      }
-    },
-    "/_zudoku/tags/membership_model": {
-      "get": {
-        "tags": [
-          "membership_model"
-        ],
-        "summary": "Zudoku placeholder for tag membership_model",
         "description": "Documentation only. Injected so Zudoku shows this tag in navigation.",
         "x-internal": true,
         "responses": {
@@ -23026,177 +23352,12 @@
         }
       }
     },
-    "/_zudoku/tags/organisation_model": {
-      "get": {
-        "tags": [
-          "organisation_model"
-        ],
-        "summary": "Zudoku placeholder for tag organisation_model",
-        "description": "Documentation only. Injected so Zudoku shows this tag in navigation.",
-        "x-internal": true,
-        "responses": {
-          "204": {
-            "description": "No content"
-          }
-        }
-      }
-    },
-    "/_zudoku/tags/person_model": {
-      "get": {
-        "tags": [
-          "person_model"
-        ],
-        "summary": "Zudoku placeholder for tag person_model",
-        "description": "Documentation only. Injected so Zudoku shows this tag in navigation.",
-        "x-internal": true,
-        "responses": {
-          "204": {
-            "description": "No content"
-          }
-        }
-      }
-    },
-    "/_zudoku/tags/programme_model": {
-      "get": {
-        "tags": [
-          "programme_model"
-        ],
-        "summary": "Zudoku placeholder for tag programme_model",
-        "description": "Documentation only. Injected so Zudoku shows this tag in navigation.",
-        "x-internal": true,
-        "responses": {
-          "204": {
-            "description": "No content"
-          }
-        }
-      }
-    },
-    "/_zudoku/tags/programme_offering_association_model": {
-      "get": {
-        "tags": [
-          "programme_offering_association_model"
-        ],
-        "summary": "Zudoku placeholder for tag programme_offering_association_model",
-        "description": "Documentation only. Injected so Zudoku shows this tag in navigation.",
-        "x-internal": true,
-        "responses": {
-          "204": {
-            "description": "No content"
-          }
-        }
-      }
-    },
-    "/_zudoku/tags/programme_offering_model": {
-      "get": {
-        "tags": [
-          "programme_offering_model"
-        ],
-        "summary": "Zudoku placeholder for tag programme_offering_model",
-        "description": "Documentation only. Injected so Zudoku shows this tag in navigation.",
-        "x-internal": true,
-        "responses": {
-          "204": {
-            "description": "No content"
-          }
-        }
-      }
-    },
-    "/_zudoku/tags/room_model": {
-      "get": {
-        "tags": [
-          "room_model"
-        ],
-        "summary": "Zudoku placeholder for tag room_model",
-        "description": "Documentation only. Injected so Zudoku shows this tag in navigation.",
-        "x-internal": true,
-        "responses": {
-          "204": {
-            "description": "No content"
-          }
-        }
-      }
-    },
     "/_zudoku/tags/security": {
       "get": {
         "tags": [
           "security"
         ],
         "summary": "Zudoku placeholder for tag security",
-        "description": "Documentation only. Injected so Zudoku shows this tag in navigation.",
-        "x-internal": true,
-        "responses": {
-          "204": {
-            "description": "No content"
-          }
-        }
-      }
-    },
-    "/_zudoku/tags/service_model": {
-      "get": {
-        "tags": [
-          "service_model"
-        ],
-        "summary": "Zudoku placeholder for tag service_model",
-        "description": "Documentation only. Injected so Zudoku shows this tag in navigation.",
-        "x-internal": true,
-        "responses": {
-          "204": {
-            "description": "No content"
-          }
-        }
-      }
-    },
-    "/_zudoku/tags/test_component_model": {
-      "get": {
-        "tags": [
-          "test_component_model"
-        ],
-        "summary": "Zudoku placeholder for tag test_component_model",
-        "description": "Documentation only. Injected so Zudoku shows this tag in navigation.",
-        "x-internal": true,
-        "responses": {
-          "204": {
-            "description": "No content"
-          }
-        }
-      }
-    },
-    "/_zudoku/tags/test_component_offering_association_attempt_model": {
-      "get": {
-        "tags": [
-          "test_component_offering_association_attempt_model"
-        ],
-        "summary": "Zudoku placeholder for tag test_component_offering_association_attempt_model",
-        "description": "Documentation only. Injected so Zudoku shows this tag in navigation.",
-        "x-internal": true,
-        "responses": {
-          "204": {
-            "description": "No content"
-          }
-        }
-      }
-    },
-    "/_zudoku/tags/test_component_offering_association_model": {
-      "get": {
-        "tags": [
-          "test_component_offering_association_model"
-        ],
-        "summary": "Zudoku placeholder for tag test_component_offering_association_model",
-        "description": "Documentation only. Injected so Zudoku shows this tag in navigation.",
-        "x-internal": true,
-        "responses": {
-          "204": {
-            "description": "No content"
-          }
-        }
-      }
-    },
-    "/_zudoku/tags/test_component_offering_model": {
-      "get": {
-        "tags": [
-          "test_component_offering_model"
-        ],
-        "summary": "Zudoku placeholder for tag test_component_offering_model",
         "description": "Documentation only. Injected so Zudoku shows this tag in navigation.",
         "x-internal": true,
         "responses": {
