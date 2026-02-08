@@ -106,6 +106,12 @@ a[href$="-model/"] > div > button {
 }
 
 
+/* Target de div met class code-block die max-h-[200px] bevat */
+div.code-block[class*="max-h-[200px]"] {
+  max-height: 600px !important;
+}
+
+
 `
   },
 };
